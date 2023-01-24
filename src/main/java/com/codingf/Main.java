@@ -51,6 +51,10 @@ public class Main {
 
         }
 
+        switch (table) {
+
+        }
+
         int choice;
 
         while (true) {
