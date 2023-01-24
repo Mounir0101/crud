@@ -1,4 +1,4 @@
-package org.example;
+package com.codingf;
 
 import java.net.ConnectException;
 import java.sql.Connection;
