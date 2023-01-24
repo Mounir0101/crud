@@ -1,12 +1,10 @@
 package com.codingf;
 
-import com.codingf.fonction.Read;
+import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
 
-import java.net.ConnectException;
 import java.sql.*;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {

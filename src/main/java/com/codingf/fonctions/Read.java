@@ -1,4 +1,4 @@
-package com.codingf.fonction;
+package com.codingf.fonctions;
 import java.sql.*;
 
 public class Read {
