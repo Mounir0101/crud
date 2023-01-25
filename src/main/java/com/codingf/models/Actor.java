@@ -44,24 +44,27 @@ public class Actor implements Tables {
                     return true;
                 }
             }
+
+            String columns = "";
+            String values = "";
+
+            column = Arrays.asList("first_name", "last_name");
+            columns = String.join(",", column);
+            value = Arrays.asList(first_name.toUpperCase(), last_name.toUpperCase());
+            values = String.join("','", value);
+            Create.create(con, "actor", columns, values);
+
+            System.out.println(green + "L'acteur " + first_name + " " + last_name + " a bien été ajouté à la table actor" + reset);
+
+            return false;
+
+
         }
 
         catch (SQLException e) {
             System.err.println("Erreur : " + e);
+            return true;
         }
-
-        String columns = "";
-        String values = "";
-
-        column = Arrays.asList("first_name", "last_name");
-        columns = String.join(",", column);
-        value = Arrays.asList(first_name.toUpperCase(), last_name.toUpperCase());
-        values = String.join("','", value);
-        Create.create(con, "actor", columns, values);
-
-        System.out.println(green + "L'acteur " + first_name + " " + last_name + " a bien été ajouté à la table actor" + reset);
-
-        return false;
 
     }
 }

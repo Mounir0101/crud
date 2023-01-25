@@ -34,10 +34,12 @@ public class City implements Tables {
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM city");
 
-            System.out.println("Dans quel pays se trouve cette ville ?");
+            //System.out.println("Dans quel pays se trouve cette ville ?");
+            System.out.println("Donnez l'id du pays dans lequel cette ville se trouve");
             country = input.nextLine();
             statement = con.createStatement();
-            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
+            //ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
+            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country_id` = '" + country + "'");
 
             if (countryExists.next()) {
                 while (result.next()) {
@@ -50,7 +52,9 @@ public class City implements Tables {
 
             else {
                 System.err.println("Ce pays n'existe pas");
-                System.out.println("Voulez vous créer le pays " + country + " ? (Y / N)");
+                System.err.println("Vous devez d'abord créer le pays correspondant pour pouvoir créer cette ville");
+                return true;
+                /*System.out.println("Voulez vous créer le pays " + country + " ? (Y / N)");
                 String createCountry = input.nextLine();
                 if (createCountry.equals("Y") || createCountry.equals("y")) {
                     Create.create(con, "country", "country", country);
@@ -58,31 +62,32 @@ public class City implements Tables {
                 }
                 else {
                     return true;
-                }
+                }*/
             }
 
             country_id = countryExists.getString("country_id");
+
+            String columns = "";
+            String values = "";
+
+            System.out.println(country_id + " is the country id");
+
+            column = Arrays.asList("city", "country_id");
+            columns = String.join(",", column);
+            value = Arrays.asList(city, country_id);
+            values = String.join("','", value);
+            Create.create(con, "city", columns, values);
+
+            System.out.println(green + "La ville " + city + " a bien été ajouté à la table city" + reset);
+
+            return false;
 
         }
 
         catch (SQLException e) {
             System.err.println("Erreur" + e);
+            return true;
         }
-
-        String columns = "";
-        String values = "";
-
-        System.out.println(country_id + " is the country id");
-
-        column = Arrays.asList("city", "country_id");
-        columns = String.join(",", column);
-        value = Arrays.asList(city, country_id);
-        values = String.join("','", value);
-        Create.create(con, "city", columns, values);
-
-        System.out.println(green + "La ville " + city + " a bien été ajouté à la table city" + reset);
-
-        return false;
 
     }
 }

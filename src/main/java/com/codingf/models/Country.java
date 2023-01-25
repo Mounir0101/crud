@@ -37,24 +37,26 @@ public class Country implements Tables{
                     return true;
                 }
             }
+
+            String columns = "";
+            String values = "";
+
+            column = Arrays.asList("country");
+            columns = String.join(",", column);
+            value = Arrays.asList(country);
+            values = String.join("','", value);
+            Create.create(con, "country", columns, values);
+
+            System.out.println(green + "Le pays " + country + " a bien été ajouté à la table country" + reset);
+
+            return false;
+
+
         }
 
         catch (SQLException e) {
-            System.err.println("Erreur " + e);
+            System.err.println("Erreur : " + e);
+            return true;
         }
-
-        String columns = "";
-        String values = "";
-
-        column = Arrays.asList("country");
-        columns = String.join(",", column);
-        value = Arrays.asList(country);
-        values = String.join("','", value);
-        Create.create(con, "country", columns, values);
-
-        System.out.println(green + "Le pays " + country + " a bien été ajouté à la table country" + reset);
-
-        return false;
-
     }
 }

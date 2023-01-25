@@ -1,16 +1,10 @@
 package com.codingf;
 
 import com.codingf.fonctions.Read;
-import com.codingf.fonctions.Create;
 import com.codingf.interfaces.Tables;
 import com.codingf.models.*;
-import com.mysql.cj.Query;
-import com.mysql.cj.util.StringUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -86,7 +80,7 @@ public class Main {
 
             switch (table) {
                 case 1 -> tableSelected = "actor";
-                case 2 -> tableSelected = "adress";
+                case 2 -> tableSelected = "address";
                 case 3 -> tableSelected = "category";
                 case 4 -> tableSelected = "city";
                 case 5 -> tableSelected = "country";
@@ -146,6 +140,15 @@ public class Main {
 
                             break;
 
+                        case "address":
+
+                            Tables adresses = new Address();
+                            if (adresses.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
                         case "category":
 
                             Tables categories = new Category();
@@ -173,11 +176,69 @@ public class Main {
 
                             break;
 
+                        case "customer":
+
+                            Tables customers = new Customer();
+
+                            if (customers.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film":
+
+                            Tables films = new Film();
+
+                            if (films.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film_actor":
+
+                            Tables films_actors = new FilmActor();
+
+                            if (films_actors.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film_category":
+
+                            Tables films_categories = new FilmCategory();
+
+                            if (films_categories.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
                         case "language":
 
                             Tables languages = new Language();
 
                             if (languages.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "staff":
+
+                            Tables staffs = new Staff();
+                            if (staffs.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "store":
+
+                            Tables stores = new Store();
+                            if (stores.create(connection, tableSelected)) {
                                 continue;
                             }
 
