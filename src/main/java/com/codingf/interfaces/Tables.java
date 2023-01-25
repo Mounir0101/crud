@@ -11,4 +11,6 @@ public interface Tables {
 
     public void read(Connection con, String table);
 
+    public void update(Connection con, String table);
+
 }

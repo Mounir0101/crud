@@ -113,64 +113,6 @@ public class Main {
                     String city = "";
                     boolean existCountry = false;
 
-                    /*switch (tableSelected) {
-
-                        case "country":
-
-                            System.out.println("Quel pays voulez vous ajouter ?");
-                            country = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM country");
-
-                            while (result.next()) {
-                                if (result.getString("country").equals(country)) {
-                                    System.err.println("Ce pays existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                        case "city":
-
-                            System.out.println("Quel ville voulez vous ajouter ?");
-                            city = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM city");
-
-                            System.out.println("Dans quel pays se trouve cette ville ?");
-                            country = input.nextLine();
-                            statement = connection.createStatement();
-                            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
-
-                            while (result.next()) {
-                                if (result.getString("city").equals(city)) {
-                                    System.err.println("Cette ville existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                            if (!countryExists.next()) {
-                                System.err.println("Ce pays n'existe pas");
-
-                            }
-                            else {
-                                country = countryExists.getString("country_id");
-                            }
-
-                            /*while (countryExists.next()) {
-                                System.out.println(countryExists.getString("country_id"));
-                                if (countryExists.getString("country_id").equals(country)) {
-                                    //System.err.println("Cette vile existe déjà");
-                                    country = countryExists.getString("country_id");
-                                    System.out.println(country);
-                                    existCountry = true;
-                                    break;
-                                }
-                            }
-
-                    }*/
-
                     if (exists) {
                         continue;
                     }
@@ -181,12 +123,6 @@ public class Main {
                         String values = "";
 
                         if (tableSelected.equals("country")) {
-
-                            /*column = Arrays.asList("country");
-                            columns = String.join(",", column);
-                            value = Arrays.asList(country);
-                            values = String.join("','", value);
-                            Create.create(connection, tableSelected, columns, values);*/
 
                             Tables countries = new Country();
                             if (countries.create(connection, tableSelected)) {
@@ -256,57 +192,36 @@ public class Main {
 
                         case "country":
 
-                            System.out.println("Quel pays voulez vous modifier ?");
-                            country = input.nextLine();
+                           // System.out.println("Quel pays vous voulez modifier ?");
 
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM country");
+                            Tables countries = new Country();
 
-                            while (result.next()) {
-                                if (result.getString("country").equals(country)) {
-                                    Update.update(connection, tableSelected, column, values);
-                                    System.out.println("Ce pays existe déjà et va etre modifier");
-                                    exists = true;
+                            countries.update(connection, tableSelected);
 
-                                }
-                            }
                             break;
 
                         case "city":
+                            Tables cities =  new City();
+                            cities.read(connection, tableSelected);
+                            cities.update(connection, tableSelected);
 
-                            System.out.println("Quel ville voulez vous modifier ?");
-                            column = input.next();
-                            statement = connection.createStatement();
-
-                            result = statement.executeQuery("SELECT * FROM city");
-
-                            while (result.next()) {
-                                if (result.getString("city").equals(column)) {
-
-                                    System.out.println("Cette " + column + "existe voulez vous la modifier");
-                                    exists = true;
-
-                                }
+                            //System.out.println("Quel ville vous voulez modifier ?");
+                            break;
 
 
-                                values = input.next();
-
-
-                                Update.update(connection, tableSelected, column, values);
-                                System.err.println("Cette " + column + " a été modifier par " + values);
-                                exists = true;
-                                break;
-                            }
                     }
 
-                    break;
+                    //Read.read(connection, tableSelected);
 
-            }
+                   }
+           }
+
 
         }
-
-
-    }
 }
+
+
+
+
 
 

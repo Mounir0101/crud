@@ -2,6 +2,7 @@ package com.codingf.models;
 
 import com.codingf.fonctions.Create;
 import com.codingf.interfaces.Tables;
+import java.awt.color.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -74,5 +75,28 @@ public class Country implements Tables{
             System.out.println("erreur : "+e);
 
         }
+    }
+
+    @Override
+    public void update(Connection con, String table) {
+        Scanner column = new Scanner(System.in);
+
+        System.out.println("quel pays voulez vous modifier ?");
+        String country = column.next();
+
+        System.out.println("par quoi voulez vous remplacer ?");
+        String value = column.next();
+
+        try {
+            Statement statement = con.createStatement();
+            statement.executeUpdate("UPDATE " + table + "  SET country = '" + value + "' WHERE country = '"+country + "'" );
+            System.out.println( "le " + country + " a bien etait modifier " );
+        } catch (SQLException e){
+            System.out.println("erreur :" +e);
+        }
+
+
+
+
     }
 }

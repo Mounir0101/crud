@@ -94,11 +94,35 @@ public class City implements Tables {
 
             while (result.next()) {
                 System.out.print("ID : " + result.getString("city_id"));
-                System.out.println("; ville : " + result.getString("city"));
+                System.out.print("; ville : " + result.getString("city"));
+                System.out.println("; Id Pays : " + result.getString("country_id"));
             }
         } catch (SQLException e) {
             System.out.println("erreur : " + e);
 
         }
+    }
+
+    @Override
+    public void update(Connection con, String table) {
+
+            Scanner column = new Scanner(System.in);
+
+            System.out.println("quel ville voulez vous modifier ?");
+            String city = column.next();
+
+            System.out.println("par quoi voulez vous remplacer ?");
+            String value = column.next();
+
+        System.out.println("c'est quoi l'id du pays de la ville ?");
+        String country_id = column.next();
+
+            try {
+                Statement statement = con.createStatement();
+                statement.executeUpdate("UPDATE " + table + "  SET city = '" + value + "' WHERE country_id = '"+country_id + "'" );
+                System.out.println("la ville " + value + " a bien été modifier");
+            } catch (SQLException e){
+                System.out.println("erreur :" +e);
+            }
     }
 }
