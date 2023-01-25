@@ -1,5 +1,6 @@
 package com.codingf;
 
+import com.codingf.fonctions.Delete;
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
 
@@ -117,10 +118,17 @@ public class Main {
                     else {
                         Create.create(connection, tableSelected, country);
                     }
+                    break;
 
                 case 2:
 
                     Read.read(connection, tableSelected);
+                    break;
+
+                case 4:
+
+                    Delete.delete(connection, "table", "column", "value");
+                    break;
 
             }
 
