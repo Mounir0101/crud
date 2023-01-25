@@ -2,6 +2,7 @@ package com.codingf;
 
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
+import com.codingf.fonctions.Update;
 import com.codingf.interfaces.Tables;
 import com.codingf.models.City;
 import com.codingf.models.Country;
@@ -50,17 +51,8 @@ public class Main {
 
             while (true) {
 
-                DatabaseMetaData databaseMetaData = connection.getMetaData();
-                ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
-                int iterator = 0;
-                while(resultSet.next()) {
-                    iterator++;
-                    System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
-                }
-
-                //System.out.println("1: Country");
-                //System.out.println("2: City");
-                System.out.println("24: Quitter");
+                System.out.println("1: Country");
+                System.out.println("2: City");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
@@ -235,9 +227,64 @@ public class Main {
 
                     Read.read(connection, tableSelected);
 
+
+                case 3:
+                    String column = "";
+                    String values = "";
+
+                    switch (tableSelected) {
+
+                        case "country":
+
+                            System.out.println("Quel pays voulez vous modifier ?");
+                            country = input.nextLine();
+
+                            Statement statement = connection.createStatement();
+                            ResultSet result = statement.executeQuery("SELECT * FROM country");
+
+                            while (result.next()) {
+                                if (result.getString("country").equals(country)) {
+                                    Update.update(connection, tableSelected, column, values);
+                                    System.out.println("Ce pays existe déjà et va etre modifier");
+                                    exists = true;
+
+                                }
+                            }
+                            break;
+
+                        case "city":
+
+                            System.out.println("Quel ville voulez vous modifier ?");
+                            column = input.next();
+                            statement = connection.createStatement();
+
+                            result = statement.executeQuery("SELECT * FROM city");
+
+                            while (result.next()) {
+                                if (result.getString("city").equals(column)) {
+
+                                    System.out.println("Cette " + column + "existe voulez vous la modifier");
+                                    exists = true;
+
+                                }
+
+
+                                values = input.next();
+
+
+                                Update.update(connection, tableSelected, column, values);
+                                System.err.println("Cette " + column + " a été modifier par " + values);
+                                exists = true;
+                                break;
+                            }
+                    }
+
             }
 
         }
 
+
     }
 }
+
+

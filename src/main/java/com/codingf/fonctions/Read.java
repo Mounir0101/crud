@@ -9,7 +9,7 @@ public class Read {
             ResultSet result = statement.executeQuery("select * from "+ table);
 
             while (result.next()){
-                System.out.println(table + " " + result.getString(table));
+                System.out.println(table +  " " + result.getString(table));
             }
         }
         catch ( SQLException e ){
