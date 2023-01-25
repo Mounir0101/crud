@@ -37,15 +37,16 @@ public class City implements Tables {
             statement = con.createStatement();
             ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
 
-            while (result.next()) {
-                if (result.getString("city").equals(city)) {
-                    System.err.println("Cette ville existe déjà");
-                    exists = true;
-                    break;
+            if (countryExists.next()) {
+                while (result.next()) {
+                    if (result.getString("city").equals(city) && result.getString("country_id").equals(countryExists.getString("country_id"))) {
+                        System.err.println("Cette ville existe déjà");
+                        return true;
+                    }
                 }
             }
 
-            if (!countryExists.next()) {
+            else {
                 System.err.println("Ce pays n'existe pas");
                 System.out.println("Voulez vous créer le pays " + country + " ? (Y / N)");
                 String createCountry = input.nextLine();
@@ -66,26 +67,18 @@ public class City implements Tables {
             System.err.println("Erreur" + e);
         }
 
-        if (exists) {
-            return true;
-        }
-        else {
+        String columns = "";
+        String values = "";
 
-            //List<String> column = null;
-            //List<String> value = null;
-            String columns = "";
-            String values = "";
+        System.out.println(country_id + " is the country id");
 
-            System.out.println(country_id + " is the country id");
+        column = Arrays.asList("city", "country_id");
+        columns = String.join(",", column);
+        value = Arrays.asList(city, country_id);
+        values = String.join("','", value);
+        Create.create(con, "city", columns, values);
 
-            column = Arrays.asList("city", "country_id");
-            columns = String.join(",", column);
-            value = Arrays.asList(city, country_id);
-            values = String.join("','", value);
-            Create.create(con, "city", columns, values);
-
-            return false;
-        }
+        return false;
 
     }
 }

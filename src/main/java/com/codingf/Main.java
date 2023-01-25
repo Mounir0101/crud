@@ -120,64 +120,6 @@ public class Main {
                     String city = "";
                     boolean existCountry = false;
 
-                    /*switch (tableSelected) {
-
-                        case "country":
-
-                            System.out.println("Quel pays voulez vous ajouter ?");
-                            country = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM country");
-
-                            while (result.next()) {
-                                if (result.getString("country").equals(country)) {
-                                    System.err.println("Ce pays existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                        case "city":
-
-                            System.out.println("Quel ville voulez vous ajouter ?");
-                            city = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM city");
-
-                            System.out.println("Dans quel pays se trouve cette ville ?");
-                            country = input.nextLine();
-                            statement = connection.createStatement();
-                            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
-
-                            while (result.next()) {
-                                if (result.getString("city").equals(city)) {
-                                    System.err.println("Cette ville existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                            if (!countryExists.next()) {
-                                System.err.println("Ce pays n'existe pas");
-
-                            }
-                            else {
-                                country = countryExists.getString("country_id");
-                            }
-
-                            /*while (countryExists.next()) {
-                                System.out.println(countryExists.getString("country_id"));
-                                if (countryExists.getString("country_id").equals(country)) {
-                                    //System.err.println("Cette vile existe déjà");
-                                    country = countryExists.getString("country_id");
-                                    System.out.println(country);
-                                    existCountry = true;
-                                    break;
-                                }
-                            }
-
-                    }*/
-
                     if (exists) {
                         continue;
                     }
@@ -189,12 +131,6 @@ public class Main {
 
                         if (tableSelected.equals("country")) {
 
-                            /*column = Arrays.asList("country");
-                            columns = String.join(",", column);
-                            value = Arrays.asList(country);
-                            values = String.join("','", value);
-                            Create.create(connection, tableSelected, columns, values);*/
-
                             Tables countries = new Country();
                             if (countries.create(connection, tableSelected)) {
                                 continue;
@@ -204,27 +140,14 @@ public class Main {
 
                         else if (tableSelected.equals("city")) {
 
-                            System.out.println(country);
+                            //System.out.println(country);
 
-                            /*if (!existCountry) {
-                                System.err.println("Ce pays n'existe pas");
-                                //continue;
-                            }*/
-
-                            //System.out.println();
-
-                            /*column = Arrays.asList("city", "country_id");
-                            columns = String.join(",", column);
-                            value = Arrays.asList(city, country);
-                            values = String.join("','", value);*/
                             Tables cities = new City();
 
                             if (cities.create(connection, tableSelected)) {
                                 continue;
                             }
 
-
-                            //Create.create(connection, tableSelected, columns, values);
 
                         }
                     }
