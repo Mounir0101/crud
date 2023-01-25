@@ -1,13 +1,14 @@
 package com.codingf.models;
 
+import com.codingf.fonctions.Create;
 import com.codingf.interfaces.Tables;
 
-public class Country implements Tables {
+import java.sql.Connection;
+import java.util.List;
 
+public class Country {
 
-
-    @Override
-    public void create() {
-
-    }
+    //public void create(Connection con, String table, List<String> column, String value) {
+    //    Create.create(con, );
+    //}
 }
