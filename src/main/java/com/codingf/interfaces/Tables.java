@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface Tables {
 
-    public void create(Connection con, String table, List<String> column, String value);
+    public boolean create(Connection con, String table);
 
 }
