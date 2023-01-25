@@ -4,6 +4,11 @@ import com.codingf.fonctions.Delete;
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
 import com.codingf.fonctions.Update;
+import com.codingf.fonctions.Update;
+import com.codingf.interfaces.Tables;
+import com.codingf.models.City;
+import com.codingf.models.Country;
+import com.mysql.cj.Query;
 import com.mysql.cj.util.StringUtils;
 
 import java.sql.*;
@@ -17,7 +22,8 @@ public class Main {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             System.err.println("Problème de chargement du driver");
         }
         System.out.println("Le driver est chargé");
@@ -31,30 +37,32 @@ public class Main {
 
         Connection connection = DriverManager.getConnection(URL, username, password);
 
-        String green = "\u001B[32m";
-        String reset = "\u001B[0m";
+        final String green = "\u001B[32m";
+        final String reset = "\u001B[0m";
 
         if (connection == null) {
             System.err.println("Erreur de connexion");
-        } else {
+        }
+        else {
             System.out.println(green + "Connexion établie" + reset);
         }
         Scanner nb = new Scanner(System.in);
         int table;
 
-        while (true) {
+        while(true) {
 
             while (true) {
 
                 System.out.println("1: Country");
                 System.out.println("2: City");
+                System.out.println("3: Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
 
                 try {
                     table = Integer.parseInt(input);
-                    if (table < 1 || table > 2) {
+                    if (table < 1 || table > 3) {
                         System.err.println("Choisissez une action valide");
                         continue;
                     }
@@ -70,6 +78,7 @@ public class Main {
             switch (table) {
                 case 1 -> tableSelected = "country";
                 case 2 -> tableSelected = "city";
+                case 3 -> System.exit(0);
             }
 
             int choice;
@@ -104,8 +113,9 @@ public class Main {
 
                     String country = "";
                     String city = "";
+                    boolean existCountry = false;
 
-                    switch (tableSelected) {
+                    /*switch (tableSelected) {
 
                         case "country":
 
@@ -126,45 +136,90 @@ public class Main {
 
                             System.out.println("Quel ville voulez vous ajouter ?");
                             city = input.nextLine();
-                            statement = connection.createStatement();
-                            result = statement.executeQuery("SELECT * FROM city");
+                            Statement statement = connection.createStatement();
+                            ResultSet result = statement.executeQuery("SELECT * FROM city");
 
                             System.out.println("Dans quel pays se trouve cette ville ?");
                             country = input.nextLine();
+                            statement = connection.createStatement();
+                            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
 
                             while (result.next()) {
                                 if (result.getString("city").equals(city)) {
-                                    System.err.println("Cette vile existe déjà");
+                                    System.err.println("Cette ville existe déjà");
                                     exists = true;
                                     break;
                                 }
                             }
 
-                    }
+                            if (!countryExists.next()) {
+                                System.err.println("Ce pays n'existe pas");
+
+                            }
+                            else {
+                                country = countryExists.getString("country_id");
+                            }
+
+                            /*while (countryExists.next()) {
+                                System.out.println(countryExists.getString("country_id"));
+                                if (countryExists.getString("country_id").equals(country)) {
+                                    //System.err.println("Cette vile existe déjà");
+                                    country = countryExists.getString("country_id");
+                                    System.out.println(country);
+                                    existCountry = true;
+                                    break;
+                                }
+                            }
+
+                    }*/
 
                     if (exists) {
                         continue;
-                    } else {
-                        List<String> column;
-                        List<String> value;
+                    }
+                    else {
+                        List<String> column = null;
+                        List<String> value = null;
                         String columns = "";
                         String values = "";
 
                         if (tableSelected.equals("country")) {
 
-                            column = Arrays.asList("country");
+                            /*column = Arrays.asList("country");
                             columns = String.join(",", column);
                             value = Arrays.asList(country);
                             values = String.join("','", value);
-                            Create.create(connection, tableSelected, columns, values);
+                            Create.create(connection, tableSelected, columns, values);*/
 
-                        } else if (tableSelected.equals("city")) {
+                            Tables countries = new Country();
+                            if (countries.create(connection, tableSelected)) {
+                                continue;
+                            }
 
-                            column = Arrays.asList("city", "country_id");
+                        }
+
+                        else if (tableSelected.equals("city")) {
+
+                            System.out.println(country);
+
+                            /*if (!existCountry) {
+                                System.err.println("Ce pays n'existe pas");
+                                //continue;
+                            }*/
+
+                            //System.out.println();
+
+                            /*column = Arrays.asList("city", "country_id");
                             columns = String.join(",", column);
                             value = Arrays.asList(city, country);
-                            values = String.join("','", value);
-                            Create.create(connection, tableSelected, columns, values);
+                            values = String.join("','", value);*/
+                            Tables cities = new City();
+
+                            if (cities.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+
+                            //Create.create(connection, tableSelected, columns, values);
 
                         }
                     }
@@ -172,12 +227,25 @@ public class Main {
 
                 case 2:
 
-                    Read.read(connection, tableSelected);
-                    break;
+                    switch (tableSelected) {
 
-                case 4:
+                        case "country":
 
-                    Delete.delete(connection, "table", "column", "value");
+                            Tables countries = new Country();
+
+                            countries.read(connection, tableSelected);
+
+                            break;
+
+
+                        case "city":
+                            Tables cities =  new City();
+                             cities.read(connection, tableSelected);
+                             break;
+
+                    }
+
+                    //Read.read(connection, tableSelected);
                     break;
 
 
@@ -224,7 +292,6 @@ public class Main {
 
                                 values = input.next();
 
-
                                 Update.update(connection, tableSelected, column, values);
                                 System.err.println("Cette " + column + " a été modifier par " + values);
                                 exists = true;
@@ -233,11 +300,11 @@ public class Main {
                     }
 
             }
+                    break;
+
 
         }
 
 
     }
 }
-
-

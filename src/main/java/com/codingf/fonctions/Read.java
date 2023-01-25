@@ -6,9 +6,10 @@ public class Read {
         try {
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("select " + table + " from "+ table);
+            ResultSet result = statement.executeQuery("select * from "+ table);
+
             while (result.next()){
-                System.out.println(table +  " " + result.getString(table));
+                System.out.println(table +  " " + result.getString("country_id"));
             }
         }
         catch ( SQLException e ){
