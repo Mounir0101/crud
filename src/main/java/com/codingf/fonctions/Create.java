@@ -11,7 +11,7 @@ public class Create {
         try {
             Statement statement = con.createStatement();
 
-            System.out.println("INSERT INTO " + table + " (" + column + ") VALUES ('" + value + "')");
+            //System.out.println("INSERT INTO " + table + " (" + column + ") VALUES ('" + value + "')");
 
             statement.execute("INSERT INTO " + table + " (" + column + ") VALUES ('" + value + "')");
 

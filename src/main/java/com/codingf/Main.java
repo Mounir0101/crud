@@ -3,8 +3,7 @@ package com.codingf;
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
 import com.codingf.interfaces.Tables;
-import com.codingf.models.City;
-import com.codingf.models.Country;
+import com.codingf.models.*;
 import com.mysql.cj.Query;
 import com.mysql.cj.util.StringUtils;
 
@@ -54,20 +53,25 @@ public class Main {
                 ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
                 int iterator = 0;
                 while(resultSet.next()) {
-                    iterator++;
-                    System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
+                    if (resultSet.getString("TABLE_NAME").equals("film_text") || resultSet.getString("TABLE_NAME").equals("sys_config")) {
+                        continue;
+                    }
+                    else {
+                        iterator++;
+                        System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
+                    }
                 }
 
                 //System.out.println("1: Country");
                 //System.out.println("2: City");
-                System.out.println("24: Quitter");
+                System.out.println("16: Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
 
                 try {
                     table = Integer.parseInt(input);
-                    if (table < 1 || table > 3) {
+                    if (table < 1 || table > 16) {
                         System.err.println("Choisissez une action valide");
                         continue;
                     }
@@ -81,9 +85,24 @@ public class Main {
             String tableSelected = "";
 
             switch (table) {
-                case 1 -> tableSelected = "country";
-                case 2 -> tableSelected = "city";
-                case 3 -> System.exit(0);
+                case 1 -> tableSelected = "actor";
+                case 2 -> tableSelected = "adress";
+                case 3 -> tableSelected = "category";
+                case 4 -> tableSelected = "city";
+                case 5 -> tableSelected = "country";
+                case 6 -> tableSelected = "customer";
+                case 7 -> tableSelected = "film";
+                case 8 -> tableSelected = "film_actor";
+                case 9 -> tableSelected = "film_category";
+                //case 10 -> tableSelected = "film_text";
+                case 10 -> tableSelected = "inventory";
+                case 11 -> tableSelected = "language";
+                case 12 -> tableSelected = "payment";
+                case 13 -> tableSelected = "rental";
+                case 14 -> tableSelected = "staff";
+                case 15 -> tableSelected = "store";
+                //case 17 -> tableSelected = "sys_config";
+                case 16 -> System.exit(0);
             }
 
             int choice;
@@ -116,31 +135,35 @@ public class Main {
 
                 case 1:
 
-                    String country = "";
-                    String city = "";
-                    boolean existCountry = false;
+                    switch (tableSelected) {
 
-                    if (exists) {
-                        continue;
-                    }
-                    else {
-                        List<String> column = null;
-                        List<String> value = null;
-                        String columns = "";
-                        String values = "";
+                        case "actor":
 
-                        if (tableSelected.equals("country")) {
+                            Tables actors = new Actor();
+                            if (actors.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "category":
+
+                            Tables categories = new Category();
+                            if (categories.create(connection, tableSelected)) {
+                                continue;
+                            }
+                            break;
+
+                        case "country":
 
                             Tables countries = new Country();
                             if (countries.create(connection, tableSelected)) {
                                 continue;
                             }
 
-                        }
+                            break;
 
-                        else if (tableSelected.equals("city")) {
-
-                            //System.out.println(country);
+                        case "city":
 
                             Tables cities = new City();
 
@@ -148,8 +171,18 @@ public class Main {
                                 continue;
                             }
 
+                            break;
 
-                        }
+                        case "language":
+
+                            Tables languages = new Language();
+
+                            if (languages.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
                     }
 
                     break;

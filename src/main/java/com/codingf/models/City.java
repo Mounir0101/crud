@@ -24,6 +24,8 @@ public class City implements Tables {
         String country_id = "";
         List<String> column = null;
         List<String> value = null;
+        final String green = "\u001B[32m";
+        final String reset = "\u001B[0m";
 
         try {
 
@@ -77,6 +79,8 @@ public class City implements Tables {
         value = Arrays.asList(city, country_id);
         values = String.join("','", value);
         Create.create(con, "city", columns, values);
+
+        System.out.println(green + "La ville " + city + " a bien été ajouté à la table city" + reset);
 
         return false;
 
