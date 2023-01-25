@@ -53,6 +53,7 @@ public class Main {
 
                 System.out.println("1: Country");
                 System.out.println("2: City");
+                System.out.println("3: Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
@@ -225,7 +226,26 @@ public class Main {
 
                 case 2:
 
-                    Read.read(connection, tableSelected);
+                    switch (tableSelected) {
+
+                        case "country":
+
+                            Tables countries = new Country();
+
+                            countries.read(connection, tableSelected);
+
+                            break;
+
+
+                        case "city":
+                            Tables cities =  new City();
+                             cities.read(connection, tableSelected);
+                             break;
+
+                    }
+
+                    //Read.read(connection, tableSelected);
+                    break;
 
 
                 case 3:
@@ -278,6 +298,8 @@ public class Main {
                                 break;
                             }
                     }
+
+                    break;
 
             }
 

@@ -57,4 +57,22 @@ public class Country implements Tables{
         return false;
 
     }
+
+    @Override
+    public void read(Connection con, String table) {
+        try {
+
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery("select * from "+ table);
+
+            while (result.next()){
+                System.out.print("ID : " + result.getString("country_id"));
+                System.out.println("; Pays : " + result.getString("country"));
+            }
+        }
+        catch ( SQLException e ){
+            System.out.println("erreur : "+e);
+
+        }
+    }
 }

@@ -52,24 +52,20 @@ public class City implements Tables {
                 if (createCountry.equals("Y") || createCountry.equals("y")) {
                     Create.create(con, "country", "country", country);
                     this.create(con, "city");
-                }
-                else {
+                } else {
                     return true;
                 }
             }
 
             country_id = countryExists.getString("country_id");
 
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Erreur" + e);
         }
 
         if (exists) {
             return true;
-        }
-        else {
+        } else {
 
             //List<String> column = null;
             //List<String> value = null;
@@ -87,5 +83,22 @@ public class City implements Tables {
             return false;
         }
 
+    }
+
+    @Override
+    public void read(Connection con, String table) {
+        try {
+
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery("select * from " + table);
+
+            while (result.next()) {
+                System.out.print("ID : " + result.getString("city_id"));
+                System.out.println("; ville : " + result.getString("city"));
+            }
+        } catch (SQLException e) {
+            System.out.println("erreur : " + e);
+
+        }
     }
 }
