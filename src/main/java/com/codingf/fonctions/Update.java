@@ -1,12 +1,8 @@
 package com.codingf.fonctions;
-
 import java.sql.*;
-import java.util.Arrays;
-import java.util.List;
 
-public class Create {
-
-    public static void create(Connection con, String table, String column, String value) {
+public class Update {
+    public static void update(Connection con, String table, String columns, String values) {
 
         try {
             //System.out.println("We got here");
@@ -16,9 +12,9 @@ public class Create {
 
             //System.out.println("Table is " + table + ", value is " + name);
 
-            System.out.println("INSERT INTO " + table + " (" + column + ") VALUES ('" + value + "')");
+            //System.out.println("Update" + table + "  SET (" + column + ") VALUES ('" + value + "')");
 
-            statement.execute("INSERT INTO " + table + " (" + column + ") VALUES ('" + value + "')");
+            //statement.executeUpdate("UPDATE " + table + "  SET " + columns + " = '" + values + "' WHERE id="  );
 
             /*ResultSet result = statement.executeQuery("SELECT * FROM country");
 
@@ -26,11 +22,9 @@ public class Create {
                 System.out.println("Pays : " + result.getString("country"));
             }*/
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Erreur : " + e);
         }
-
     }
-
 }
+

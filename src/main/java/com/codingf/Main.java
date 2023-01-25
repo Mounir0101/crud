@@ -3,8 +3,13 @@ package com.codingf;
 import com.codingf.fonctions.Delete;
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
+import com.codingf.fonctions.Update;
+import com.mysql.cj.util.StringUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -12,8 +17,7 @@ public class Main {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("Problème de chargement du driver");
         }
         System.out.println("Le driver est chargé");
@@ -32,14 +36,13 @@ public class Main {
 
         if (connection == null) {
             System.err.println("Erreur de connexion");
-        }
-        else {
+        } else {
             System.out.println(green + "Connexion établie" + reset);
         }
         Scanner nb = new Scanner(System.in);
         int table;
 
-        while(true) {
+        while (true) {
 
             while (true) {
 
@@ -99,24 +102,71 @@ public class Main {
 
                 case 1:
 
-                    System.out.println("Quel pays voulez vous ajouter");
-                    String country = input.nextLine();
-                    Statement statement = connection.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT * FROM country");
+                    String country = "";
+                    String city = "";
 
-                    while (result.next()) {
-                        if (result.getString("country").equals(country)) {
-                            System.err.println("Ce pays existe déjà");
-                            exists = true;
-                            break;
-                        }
+                    switch (tableSelected) {
+
+                        case "country":
+
+                            System.out.println("Quel pays voulez vous ajouter ?");
+                            country = input.nextLine();
+                            Statement statement = connection.createStatement();
+                            ResultSet result = statement.executeQuery("SELECT * FROM country");
+
+                            while (result.next()) {
+                                if (result.getString("country").equals(country)) {
+                                    System.err.println("Ce pays existe déjà");
+                                    exists = true;
+                                    break;
+                                }
+                            }
+
+                        case "city":
+
+                            System.out.println("Quel ville voulez vous ajouter ?");
+                            city = input.nextLine();
+                            statement = connection.createStatement();
+                            result = statement.executeQuery("SELECT * FROM city");
+
+                            System.out.println("Dans quel pays se trouve cette ville ?");
+                            country = input.nextLine();
+
+                            while (result.next()) {
+                                if (result.getString("city").equals(city)) {
+                                    System.err.println("Cette vile existe déjà");
+                                    exists = true;
+                                    break;
+                                }
+                            }
+
                     }
 
                     if (exists) {
                         continue;
-                    }
-                    else {
-                        Create.create(connection, tableSelected, country);
+                    } else {
+                        List<String> column;
+                        List<String> value;
+                        String columns = "";
+                        String values = "";
+
+                        if (tableSelected.equals("country")) {
+
+                            column = Arrays.asList("country");
+                            columns = String.join(",", column);
+                            value = Arrays.asList(country);
+                            values = String.join("','", value);
+                            Create.create(connection, tableSelected, columns, values);
+
+                        } else if (tableSelected.equals("city")) {
+
+                            column = Arrays.asList("city", "country_id");
+                            columns = String.join(",", column);
+                            value = Arrays.asList(city, country);
+                            values = String.join("','", value);
+                            Create.create(connection, tableSelected, columns, values);
+
+                        }
                     }
                     break;
 
@@ -130,11 +180,64 @@ public class Main {
                     Delete.delete(connection, "table", "column", "value");
                     break;
 
-            }
 
-            System.out.println("Vous voulez " + choice + " dans la table " + tableSelected);
+                case 3:
+                    String column = "";
+                    String values = "";
+
+                    switch (tableSelected) {
+
+                        case "country":
+
+                            System.out.println("Quel pays voulez vous modifier ?");
+                            country = input.nextLine();
+
+                            Statement statement = connection.createStatement();
+                            ResultSet result = statement.executeQuery("SELECT * FROM country");
+
+                            while (result.next()) {
+                                if (result.getString("country").equals(country)) {
+                                    Update.update(connection, tableSelected, column, values);
+                                    System.out.println("Ce pays existe déjà et va etre modifier");
+                                    exists = true;
+
+                                }
+                            }
+                            break;
+
+                        case "city":
+
+                            System.out.println("Quel ville voulez vous modifier ?");
+                            column = input.next();
+                            statement = connection.createStatement();
+
+                            result = statement.executeQuery("SELECT * FROM city");
+
+                            while (result.next()) {
+                                if (result.getString("city").equals(column)) {
+
+                                    System.out.println("Cette " + column + "existe voulez vous la modifier");
+                                    exists = true;
+
+                                }
+
+
+                                values = input.next();
+
+
+                                Update.update(connection, tableSelected, column, values);
+                                System.err.println("Cette " + column + " a été modifier par " + values);
+                                exists = true;
+                                break;
+                            }
+                    }
+
+            }
 
         }
 
+
     }
 }
+
+

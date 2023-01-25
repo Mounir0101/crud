@@ -8,7 +8,7 @@ public class Read {
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("select " + table + " from "+ table);
             while (result.next()){
-                System.out.println(table + " " + result.getString(table));
+                System.out.println(table +  " " + result.getString(table));
             }
         }
         catch ( SQLException e ){
