@@ -1,19 +1,24 @@
 package com.codingf.fonctions;
 import java.sql.*;
+import java.util.List;
 
 public class Read {
-    public static void read(Connection con, String table) {
+    public static void read(Connection con, String table, ResultSet list, List<String> columns) {
         try {
 
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("select * from "+ table);
+            while (list.next()) {
+                for (int j = 1; j <= columns.size(); j++) {
+                    if (!columns.get(j-1).equals("picture")) {
+                        System.out.println(columns.get(j-1) + " : " + list.getString(j));
+                    }
+                }
 
-            while (result.next()){
-                System.out.println(table + " " + result.getString(table));
+                System.out.println("========================================================================================================");
             }
+
         }
         catch ( SQLException e ){
-            System.out.println("erreur : "+e);
+            System.err.println("Erreur : "+e);
 
         }
     }

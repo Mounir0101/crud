@@ -1,12 +1,14 @@
 package com.codingf.models;
 
 import com.codingf.fonctions.Create;
+import com.codingf.fonctions.Read;
 import com.codingf.interfaces.Tables;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -85,5 +87,31 @@ public class Inventory implements Tables {
             System.err.println("Erreur : " + e);
             return true;
         }
+    }
+
+    @Override
+    public void read(Connection con, String table) {
+
+        try {
+            Statement stmt = con.createStatement();
+
+            ResultSet country_table = stmt.executeQuery("SELECT * FROM " + table);
+
+            System.out.println();
+
+            List<String> column_list = new ArrayList<>();
+
+            column_list.add("inventory_id");
+            column_list.add("film_id");
+            column_list.add("store_id");
+            column_list.add("last_update");
+
+            Read.read(con, table, country_table, column_list);
+        }
+
+        catch (SQLException e) {
+            System.err.println("Erreur : " + e);
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package com.codingf.models;
 
 import com.codingf.fonctions.Create;
+import com.codingf.fonctions.Read;
 import com.codingf.interfaces.Tables;
 
 import java.nio.charset.StandardCharsets;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -97,5 +99,38 @@ public class Staff implements Tables {
             System.err.println("Erreur : " + e);
             return true;
         }
+    }
+
+    @Override
+    public void read(Connection con, String table) {
+
+        try {
+            Statement stmt = con.createStatement();
+
+            ResultSet country_table = stmt.executeQuery("SELECT * FROM " + table);
+
+            System.out.println();
+
+            List<String> column_list = new ArrayList<>();
+
+            column_list.add("staff_id");
+            column_list.add("first_name");
+            column_list.add("last_name");
+            column_list.add("address_id");
+            column_list.add("picture");
+            column_list.add("email");
+            column_list.add("store_id");
+            column_list.add("active");
+            column_list.add("username");
+            column_list.add("password");
+            column_list.add("last_update");
+
+            Read.read(con, table, country_table, column_list);
+        }
+
+        catch (SQLException e) {
+            System.err.println("Erreur : " + e);
+        }
+
     }
 }

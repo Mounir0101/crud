@@ -125,6 +125,22 @@ public class Main {
             Scanner input = new Scanner(System.in);
             boolean exists = false;
 
+            Tables actors = new Actor();
+            Tables addresses = new Address();
+            Tables categories = new Category();
+            Tables countries = new Country();
+            Tables cities = new City();
+            Tables customers = new Customer();
+            Tables films = new Film();
+            Tables films_actors = new FilmActor();
+            Tables films_categories = new FilmCategory();
+            Tables inventories = new Inventory();
+            Tables languages = new Language();
+            Tables payments = new Payment();
+            Tables rentals = new Rental();
+            Tables staffs = new Staff();
+            Tables stores = new Store();
+
             switch (choice) {
 
                 case 1:
@@ -133,7 +149,6 @@ public class Main {
 
                         case "actor":
 
-                            Tables actors = new Actor();
                             if (actors.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -153,7 +168,6 @@ public class Main {
 
                         case "category":
 
-                            Tables categories = new Category();
                             if (categories.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -161,7 +175,6 @@ public class Main {
 
                         case "country":
 
-                            Tables countries = new Country();
                             if (countries.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -169,8 +182,6 @@ public class Main {
                             break;
 
                         case "city":
-
-                            Tables cities = new City();
 
                             if (cities.create(connection, tableSelected)) {
                                 continue;
@@ -180,8 +191,6 @@ public class Main {
 
                         case "customer":
 
-                            Tables customers = new Customer();
-
                             if (customers.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -189,8 +198,6 @@ public class Main {
                             break;
 
                         case "film":
-
-                            Tables films = new Film();
 
                             if (films.create(connection, tableSelected)) {
                                 continue;
@@ -200,8 +207,6 @@ public class Main {
 
                         case "film_actor":
 
-                            Tables films_actors = new FilmActor();
-
                             if (films_actors.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -209,8 +214,6 @@ public class Main {
                             break;
 
                         case "film_category":
-
-                            Tables films_categories = new FilmCategory();
 
                             if (films_categories.create(connection, tableSelected)) {
                                 continue;
@@ -220,8 +223,6 @@ public class Main {
 
                         case "inventory":
 
-                            Tables inventories = new Inventory();
-
                             if (inventories.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -229,8 +230,6 @@ public class Main {
                             break;
 
                         case "language":
-
-                            Tables languages = new Language();
 
                             if (languages.create(connection, tableSelected)) {
                                 continue;
@@ -240,7 +239,6 @@ public class Main {
 
                         case "payment":
 
-                            Tables payments = new Payment();
                             if (payments.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -249,7 +247,6 @@ public class Main {
 
                         case "rental":
 
-                            Tables rentals = new Rental();
                             if (rentals.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -258,7 +255,6 @@ public class Main {
 
                         case "staff":
 
-                            Tables staffs = new Staff();
                             if (staffs.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -267,7 +263,6 @@ public class Main {
 
                         case "store":
 
-                            Tables stores = new Store();
                             if (stores.create(connection, tableSelected)) {
                                 continue;
                             }
@@ -280,7 +275,86 @@ public class Main {
 
                 case 2:
 
-                    Read.read(connection, tableSelected);
+                    switch (tableSelected) {
+
+                        case "actor":
+
+                            actors.read(connection, tableSelected);
+                            break;
+
+                        case "address":
+
+                            addresses.read(connection, tableSelected);
+                            break;
+
+                        case "category":
+
+                            categories.read(connection, tableSelected);
+                            break;
+
+                        case "country":
+
+                            countries.read(connection, tableSelected);
+                            break;
+
+                        case "city":
+
+                            cities.read(connection, tableSelected);
+                            break;
+
+                        case "customer":
+
+                            customers.read(connection, tableSelected);
+                            break;
+
+                        case "film":
+
+                            films.read(connection, tableSelected);
+                            break;
+
+                        case "film_actor":
+
+                            films_actors.read(connection, tableSelected);
+                            break;
+
+                        case "film_category":
+
+                            films_categories.read(connection, tableSelected);
+                            break;
+
+                        case "inventory":
+
+                            inventories.read(connection, tableSelected);
+                            break;
+
+                        case "language":
+
+                            languages.read(connection, tableSelected);
+                            break;
+
+                        case "payment":
+
+                            payments.read(connection, tableSelected);
+                            break;
+
+                        case "rental":
+
+                            rentals.read(connection, tableSelected);
+                            break;
+
+                        case "staff":
+
+                            staffs.read(connection, tableSelected);
+                            break;
+
+                        case "store":
+
+                            stores.read(connection, tableSelected);
+                            break;
+
+                    }
+
+                    break;
 
             }
 
