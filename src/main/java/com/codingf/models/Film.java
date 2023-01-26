@@ -112,38 +112,4 @@ public class Film implements Tables {
 
     }
 
-    @Override
-    public void read(Connection con, String table) {
-
-        try {
-            Statement stmt = con.createStatement();
-
-            ResultSet country_table = stmt.executeQuery("SELECT * FROM " + table);
-
-            System.out.println();
-
-            List<String> column_list = new ArrayList<>();
-
-            column_list.add("film_id");
-            column_list.add("title");
-            column_list.add("description");
-            column_list.add("release_year");
-            column_list.add("language_id");
-            column_list.add("original_language_id");
-            column_list.add("rental_duration");
-            column_list.add("rental_rate");
-            column_list.add("length");
-            column_list.add("replacement_cost");
-            column_list.add("rating");
-            column_list.add("special_features");
-            column_list.add("last_update");
-
-            Read.read(con, table, country_table, column_list);
-        }
-
-        catch (SQLException e) {
-            System.err.println("Erreur : " + e);
-        }
-
-    }
 }

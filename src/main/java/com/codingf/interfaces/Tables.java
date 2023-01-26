@@ -9,6 +9,4 @@ public interface Tables {
 
     public boolean create(Connection con, String table);
 
-    public void read(Connection con, String table);
-
 }

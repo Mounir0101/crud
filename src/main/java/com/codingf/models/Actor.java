@@ -68,32 +68,4 @@ public class Actor implements Tables {
         }
 
     }
-
-    @Override
-    public void read(Connection con, String table) {
-
-        try {
-
-            Statement stmt = con.createStatement();
-
-            ResultSet country_table = stmt.executeQuery("SELECT * FROM " + table);
-
-            System.out.println();
-
-            List<String> column_list = new ArrayList<>();
-
-            column_list.add("actor_id");
-            column_list.add("first_name");
-            column_list.add("last_name");
-            column_list.add("last_update");
-
-            Read.read(con, table, country_table, column_list);
-
-
-        }
-
-        catch (SQLException e) {
-            System.out.println("Erreur : " + e);
-        }
-    }
 }

@@ -62,32 +62,4 @@ public class Country implements Tables{
         }
     }
 
-    @Override
-    public void read(Connection con, String table) {
-
-        try {
-
-            Statement stmt = con.createStatement();
-
-            ResultSet country_table = stmt.executeQuery("SELECT * FROM " + table);
-
-            List<String> column_list = new ArrayList<>();
-
-            column_list.add("country_id");
-            column_list.add("country");
-            column_list.add("last_update");
-
-            //System.out.println();
-
-            Read.read(con, table, country_table, column_list);
-
-        }
-
-        catch (SQLException e) {
-            System.out.println("Erreur : " + e);
-        }
-
-    }
-
-
 }
