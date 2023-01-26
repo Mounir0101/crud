@@ -188,28 +188,10 @@ public class Main {
                     String column = "";
                     String values = "";
 
-                    switch (tableSelected) {
+                    Update.update(connection, tableSelected);
 
-                        case "country":
+                    break;
 
-                           // System.out.println("Quel pays vous voulez modifier ?");
-
-                            Tables countries = new Country();
-
-                            countries.update(connection, tableSelected);
-
-                            break;
-
-                        case "city":
-                            Tables cities =  new City();
-                            cities.read(connection, tableSelected);
-                            cities.update(connection, tableSelected);
-
-                            //System.out.println("Quel ville vous voulez modifier ?");
-                            break;
-
-
-                    }
 
                     //Read.read(connection, tableSelected);
 
