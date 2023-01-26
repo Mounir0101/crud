@@ -6,19 +6,18 @@ import com.codingf.fonctions.Create;
 import com.codingf.fonctions.Update;
 import com.codingf.interfaces.Tables;
 import com.codingf.models.*;
+import com.codingf.connection.DbConnection;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-        try {
+        /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             System.err.println("Problème de chargement du driver");
         }
         System.out.println("Le driver est chargé");
@@ -39,7 +38,10 @@ public class Main {
             System.err.println("Erreur de connexion");
         } else {
             System.out.println(green + "Connexion établie" + reset);
-        }
+        }*/
+
+        Connection connection = DbConnection.dbConnection();
+
         Scanner nb = new Scanner(System.in);
         int table;
 
@@ -72,7 +74,8 @@ public class Main {
                         continue;
                     }
                     break;
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     System.err.println("nombre incorrect");
                 }
 
@@ -161,12 +164,6 @@ public class Main {
 
                             System.out.println("Désolé, je n'ai pas réussi à rendre possible la création d'une adresse");
                             break;
-                            /*Tables adresses = new Address();
-                            if (adresses.create(connection, tableSelected)) {
-                                continue;
-                            }
-
-                            break;*/
 
                         case "category":
 
@@ -282,8 +279,6 @@ public class Main {
                     break;
 
                 case 3:
-                    String column = "";
-                    String values = "";
 
                     Update.update(connection, tableSelected);
 
