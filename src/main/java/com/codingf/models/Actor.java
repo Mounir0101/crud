@@ -15,7 +15,6 @@ import java.util.Scanner;
 
 public class Actor implements Tables {
 
-
     @Override
     public boolean create(Connection con, String table) {
 
@@ -87,8 +86,6 @@ public class Actor implements Tables {
             column_list.add("first_name");
             column_list.add("last_name");
             column_list.add("last_update");
-
-            //System.out.println();
 
             Read.read(con, table, country_table, column_list);
 

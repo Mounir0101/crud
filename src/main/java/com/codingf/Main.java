@@ -1,10 +1,15 @@
 package com.codingf;
 
 import com.codingf.fonctions.Read;
+import com.codingf.fonctions.Create;
+import com.codingf.fonctions.Update;
 import com.codingf.interfaces.Tables;
 import com.codingf.models.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -356,9 +361,23 @@ public class Main {
 
                     break;
 
-            }
+                case 3:
+                    String column = "";
+                    String values = "";
+
+                    Update.update(connection, tableSelected);
+
+                    break;
+
+                   }
+           }
+
 
         }
-
-    }
 }
+
+
+
+
+
+
