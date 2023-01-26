@@ -49,23 +49,26 @@ public class Staff implements Tables {
             System.out.println("Indiquez votre mot de passe");
             password = input.nextLine();
 
-            /*try {
-                MessageDigest msg = MessageDigest.getInstance("SHA-256");
-                byte[] hash = msg.digest(password.getBytes(StandardCharsets.UTF_8));
-                // convertir bytes en hexadécimal
-                StringBuilder s = new StringBuilder();
-                for (byte b : hash) {
-                    s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-                }
-                password = s.toString();
-            }
-            catch (NoSuchAlgorithmException e) {
-                System.err.println("Erreur : " + e);
-
-        }*/
-
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM staff");
+            ResultSet result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas d'adresse ayant l'id " + address);
+                System.err.println("Vous devez d'abord créer l'adresse correspondante");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM store WHERE store_id = " + store_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de magasin ayant l'id " + store_id);
+                System.err.println("Vous devez d'abord créer le magasin correspondant");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM staff");
 
             while (result.next()) {
                 if (result.getString("first_name").equals(first_name) && result.getString("last_name").equals(last_name)) {

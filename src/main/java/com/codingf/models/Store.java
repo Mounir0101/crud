@@ -31,8 +31,27 @@ public class Store implements Tables {
             manager_staff_id = input.nextLine();
             System.out.println("Donnez l'id de l'adresse de ce magasin");
             address_id = input.nextLine();
+
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM store");
+            ResultSet result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = " + manager_staff_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de manager ayant l'id " + manager_staff_id);
+                System.err.println("Vous devez d'abord créer le manager correspondant");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas d'adresse ayant l'id " + address_id);
+                System.err.println("Vous devez d'abord créer l'adresse correspondante");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM store");
 
             while (result.next()) {
                 if (result.getString("address_id").equals(address_id)) {

@@ -35,7 +35,25 @@ public class FilmCategory implements Tables {
         try {
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM film_category");
+            ResultSet result = statement.executeQuery("SELECT * FROM category WHERE category_id = " + category_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de catégorie ayant l'id " + category_id);
+                System.err.println("Vous devez d'abord créer la catégorie correspondante");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM film WHERE film_id = " + film_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de film ayant l'id " + film_id);
+                System.err.println("Vous devez d'abord créer le film correspondant");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM film_category");
 
             while (result.next()) {
                 if (result.getString("category_id").equals(category_id) && result.getString("film_id").equals(film_id)) {

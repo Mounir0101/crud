@@ -68,29 +68,45 @@ public class Film implements Tables {
 
         }
 
+        try {
 
-            /*Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM language");
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM language WHERE language_id = " + language_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de langage ayant l'id " + language_id);
+                System.err.println("Vous devez d'abord créer la langue correspondante");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM film");
 
             while (result.next()) {
-                if (result.getString("name").equals(language)) {
-                    System.err.println("Cette langue existe déjà");
+                if (result.getString("title").equals(title)) {
+                    System.err.println("Ce film existe déjà");
                     return true;
                 }
-            }*/
+            }
 
-        String columns = "";
-        String values = "";
+            String columns = "";
+            String values = "";
 
-        column = Arrays.asList("title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating");
-        columns = String.join(",", column);
-        value = Arrays.asList(title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating);
-        values = String.join("','", value);
-        Create.create(con, "film", columns, values);
+            column = Arrays.asList("title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating");
+            columns = String.join(",", column);
+            value = Arrays.asList(title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating);
+            values = String.join("','", value);
+            Create.create(con, "film", columns, values);
 
-        System.out.println(green + "Le film " + title + " a bien été ajouté à la table film" + reset);
+            System.out.println(green + "Le film " + title + " a bien été ajouté à la table film" + reset);
 
-        return false;
+            return false;
+        }
+
+        catch (SQLException e) {
+            System.err.println("Erreur : " + e);
+            return true;
+        }
 
     }
 }

@@ -47,7 +47,25 @@ public class Customer implements Tables {
             String create_date = dtf.format(now);
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customer");
+            ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = " + store_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas de magasin ayant l'id " + store_id);
+                System.err.println("Vous devez d'abord créer le magasin correspondant");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address_id);
+
+            if (!result.next()) {
+                System.err.println("Il n'existe pas d'adresse ayant l'id " + address_id);
+                System.err.println("Vous devez d'abord créer l'adresse correspondante");
+                return true;
+            }
+
+            statement = con.createStatement();
+            result = statement.executeQuery("SELECT * FROM customer");
 
             while (result.next()) {
                 if (result.getString("first_name").equals(first_name) && result.getString("last_name").equals(last_name)) {

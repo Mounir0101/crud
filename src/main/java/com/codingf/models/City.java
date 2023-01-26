@@ -18,10 +18,10 @@ public class City implements Tables {
     public boolean create(Connection con, String table) {
 
         String city = "";
-        String country = "";
+        String country_id = "";
+
         Scanner input = new Scanner(System.in);
         boolean exists = false;
-        String country_id = "";
         List<String> column = null;
         List<String> value = null;
         final String green = "\u001B[32m";
@@ -34,43 +34,28 @@ public class City implements Tables {
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM city");
 
-            //System.out.println("Dans quel pays se trouve cette ville ?");
             System.out.println("Donnez l'id du pays dans lequel cette ville se trouve");
-            country = input.nextLine();
+            country_id = input.nextLine();
             statement = con.createStatement();
-            //ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
-            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country_id` = '" + country + "'");
+            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country_id` = '" + country_id + "'");
 
-            if (countryExists.next()) {
-                while (result.next()) {
-                    if (result.getString("city").equals(city) && result.getString("country_id").equals(countryExists.getString("country_id"))) {
-                        System.err.println("Cette ville existe déjà");
-                        return true;
-                    }
-                }
-            }
-
-            else {
-                System.err.println("Ce pays n'existe pas");
+            if (!countryExists.next()) {
+                System.err.println("Il n'existe pas de pays ayant l'id " + country_id);
                 System.err.println("Vous devez d'abord créer le pays correspondant pour pouvoir créer cette ville");
                 return true;
-                /*System.out.println("Voulez vous créer le pays " + country + " ? (Y / N)");
-                String createCountry = input.nextLine();
-                if (createCountry.equals("Y") || createCountry.equals("y")) {
-                    Create.create(con, "country", "country", country);
-                    this.create(con, "city");
-                }
-                else {
+            }
+
+            while (result.next()) {
+                if (result.getString("city").equals(city) && result.getString("country_id").equals(countryExists.getString("country_id"))) {
+                    System.err.println("Cette ville existe déjà");
                     return true;
-                }*/
+                }
             }
 
             country_id = countryExists.getString("country_id");
 
             String columns = "";
             String values = "";
-
-            System.out.println(country_id + " is the country id");
 
             column = Arrays.asList("city", "country_id");
             columns = String.join(",", column);

@@ -142,12 +142,14 @@ public class Main {
 
                         case "address":
 
-                            Tables adresses = new Address();
+                            System.out.println("Désolé, je n'ai pas réussi à rendre possible la création d'une adresse");
+                            break;
+                            /*Tables adresses = new Address();
                             if (adresses.create(connection, tableSelected)) {
                                 continue;
                             }
 
-                            break;
+                            break;*/
 
                         case "category":
 
@@ -216,11 +218,39 @@ public class Main {
 
                             break;
 
+                        case "inventory":
+
+                            Tables inventories = new Inventory();
+
+                            if (inventories.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
                         case "language":
 
                             Tables languages = new Language();
 
                             if (languages.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "payment":
+
+                            Tables payments = new Payment();
+                            if (payments.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "rental":
+
+                            Tables rentals = new Rental();
+                            if (rentals.create(connection, tableSelected)) {
                                 continue;
                             }
 
