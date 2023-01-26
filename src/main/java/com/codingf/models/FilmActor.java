@@ -37,7 +37,7 @@ public class FilmActor implements Tables {
         try {
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM actor WHERE actor_id = " + actor_id);
+            ResultSet result = statement.executeQuery("SELECT * FROM actor WHERE actor_id = '" + actor_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas d'acteur ayant l'id " + actor_id);
@@ -46,7 +46,7 @@ public class FilmActor implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM film WHERE film_id = " + film_id);
+            result = statement.executeQuery("SELECT * FROM film WHERE film_id = '" + film_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de film ayant l'id " + film_id);

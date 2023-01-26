@@ -7,6 +7,9 @@ public class Read {
     public static void read(Connection con, String table) {
         try {
 
+            final String red = "\u001B[31m";
+            final String reset = "\u001B[0m";
+
             Statement stmt = con.createStatement();
 
             ResultSet list = stmt.executeQuery("SELECT * FROM " + table);
@@ -29,7 +32,7 @@ public class Read {
                     }
                 }
 
-                System.out.println("========================================================================================================");
+                System.out.println(red + "========================================================================================================" + reset);
             }
 
         }

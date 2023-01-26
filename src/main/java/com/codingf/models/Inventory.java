@@ -34,7 +34,7 @@ public class Inventory implements Tables {
             store_id = input.nextLine();
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = " + store_id);
+            ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = '" + store_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de magasin ayant l'id " + store_id);
@@ -43,7 +43,7 @@ public class Inventory implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM film WHERE film_id = " + film_id);
+            result = statement.executeQuery("SELECT * FROM film WHERE film_id = '" + film_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de film ayant l'id " + film_id);

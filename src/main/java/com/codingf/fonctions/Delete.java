@@ -9,15 +9,57 @@ public class Delete {
 
         try {
 
+            String element_id;
+            String film_id;
+            String actor_id;
+            String category_id;
+
             final String green = "\u001B[32m";
             final String reset = "\u001B[0m";
 
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Donnez l'id de l'élément que vous voulez supprimer");
-            String element_id = input.nextLine();
+            if (table.equals("film_actor") || table.equals("film_category")) {
 
-            Statement statement = con.createStatement();
+                System.out.println("Donnez l'id du film que vous voulez supprimer");
+                film_id = input.nextLine();
+
+                if (table.equals("film_actor")) {
+                    System.out.println("Donnez l'id de l'acteur que vous voulez supprimer");
+                    actor_id = input.nextLine();
+
+                    Statement statement = con.createStatement();
+
+                    statement.executeUpdate("DELETE FROM " + table + " WHERE film_id = " + film_id + " AND actor_id = " + actor_id);
+
+                    System.out.println(green + "L'élément " + film_id + ", " + actor_id + " a bien été supprimé de la table " + table + reset);
+
+                    return false;
+
+
+                }
+                else {
+                    System.out.println("Donnez l'id de la catégorie que vous voulez supprimer");
+                    category_id = input.nextLine();
+
+                    Statement statement = con.createStatement();
+
+                    statement.executeUpdate("DELETE FROM " + table + " WHERE film_id = " + film_id + " AND category_id = " + category_id);
+
+                    System.out.println(green + "L'élément " + film_id + ", " + category_id + " a bien été supprimé de la table " + table + reset);
+
+                    return false;
+
+                }
+
+            }
+
+            else {
+                System.out.println("Donnez l'id de l'élément que vous voulez supprimer");
+                element_id = input.nextLine();
+            }
+
+            Statement statement;
 
             //System.out.println(green + "Checkpoint 1" + reset);
 
@@ -54,9 +96,7 @@ public class Delete {
                                 System.err.println("L'élément que vous essayez de supprimer est utilisé comme clé étrangère dans la table " + tableList.getString("table_name"));
                                 return true;
                             }
-
                         }
-
                     }
                 }
             }

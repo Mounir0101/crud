@@ -49,7 +49,7 @@ public class Customer implements Tables {
             String create_date = dtf.format(now);
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = " + store_id);
+            ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = '" + store_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de magasin ayant l'id " + store_id);
@@ -58,7 +58,7 @@ public class Customer implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address_id);
+            result = statement.executeQuery("SELECT * FROM address WHERE address_id = '" + address_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas d'adresse ayant l'id " + address_id);

@@ -46,7 +46,7 @@ public class Payment implements Tables {
             String payment_date = dtf.format(now);
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE customer_id = " + customer_id);
+            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE customer_id = '" + customer_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de client ayant l'id " + customer_id);
@@ -55,7 +55,7 @@ public class Payment implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = " + staff_id);
+            result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = '" + staff_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de manager ayant l'id " + staff_id);
@@ -64,7 +64,7 @@ public class Payment implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM rental WHERE rental_id = " + rental_id);
+            result = statement.executeQuery("SELECT * FROM rental WHERE rental_id = '" + rental_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de location ayant l'id " + rental_id);

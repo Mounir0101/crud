@@ -53,7 +53,7 @@ public class Main {
                 ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
                 int iterator = 0;
                 while (resultSet.next()) {
-                    if (resultSet.getString("TABLE_NAME").equals("film_text") || resultSet.getString("TABLE_NAME").equals("sys_config")) {
+                    if (resultSet.getString("TABLE_NAME").equals("sys_config")) {
                         continue;
                     } else {
 
@@ -62,14 +62,14 @@ public class Main {
                     }
                 }
 
-                System.out.println("16: Quitter");
+                System.out.println("17 : Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
 
                 try {
                     table = Integer.parseInt(input);
-                    if (table < 1 || table > 16) {
+                    if (table < 1 || table > 17) {
                         System.err.println("Choisissez une action valide");
                         continue;
                     }
@@ -93,25 +93,31 @@ public class Main {
                 case 7 -> tableSelected = "film";
                 case 8 -> tableSelected = "film_actor";
                 case 9 -> tableSelected = "film_category";
-                //case 10 -> tableSelected = "film_text";
-                case 10 -> tableSelected = "inventory";
-                case 11 -> tableSelected = "language";
-                case 12 -> tableSelected = "payment";
-                case 13 -> tableSelected = "rental";
-                case 14 -> tableSelected = "staff";
-                case 15 -> tableSelected = "store";
+                case 10 -> tableSelected = "film_text";
+                case 11 -> tableSelected = "inventory";
+                case 12 -> tableSelected = "language";
+                case 13 -> tableSelected = "payment";
+                case 14 -> tableSelected = "rental";
+                case 15 -> tableSelected = "staff";
+                case 16 -> tableSelected = "store";
                 //case 17 -> tableSelected = "sys_config";
-                case 16 -> System.exit(0);
+                case 17 -> System.exit(0);
             }
 
-            int choice;
+            int choice = 0;
 
             while (true) {
-                System.out.println("1: Créer un élément");
-                System.out.println("2: Lire la table");
-                System.out.println("3: Mettre à jour un élément");
-                System.out.println("4: Supprimer un élément");
-                System.out.println("Que voulez vous faire avec cette table ?");
+                if (!tableSelected.equals("film_text")) {
+                    System.out.println("1: Créer un élément");
+                    System.out.println("2: Lire la table");
+                    System.out.println("3: Mettre à jour un élément");
+                    System.out.println("4: Supprimer un élément");
+                    System.out.println("Que voulez vous faire avec cette table ?");
+                }
+                else {
+                    Read.read(connection, tableSelected);
+                    break;
+                }
 
                 String input = nb.nextLine();
 

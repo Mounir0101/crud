@@ -96,7 +96,7 @@ public class Film implements Tables {
 
             column = Arrays.asList("title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating");
             columns = String.join(",", column);
-            value = Arrays.asList(title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating);
+            value = Arrays.asList(title.toUpperCase(), description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating);
             values = String.join("','", value);
             Create.create(con, "film", columns, values);
 

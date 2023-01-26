@@ -1,11 +1,9 @@
 package com.codingf.models;
 
 import com.codingf.fonctions.Create;
-import com.codingf.fonctions.Read;
 import com.codingf.interfaces.Tables;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,15 +12,14 @@ public class Address implements Tables {
     @Override
     public boolean create(Connection con, String table) {
 
-        boolean exists = false;
-        String address = "";
-        String district = "";
-        String postal_code = "";
-        String phone = "";
-        String location = "null";
-        String city = "";
-        List<String> column = null;
-        List<String> value = null;
+        String address;
+        String district;
+        String postal_code;
+        String phone;
+        String location;
+        String city;
+        List<String> column;
+        List<String> value;
         final String green = "\u001B[32m";
         final String reset = "\u001B[0m";
 
@@ -77,10 +74,10 @@ public class Address implements Tables {
                 }
             }*/
 
-        String columns = "";
-        String values = "";
+        String columns;
+        String values;
 
-        column = Arrays.asList("address, district, city_id, postal_code, phone, location");
+        column = Arrays.asList("address", "district", "city_id", "postal_code", "phone", "location");
         columns = String.join(",", column);
         value = Arrays.asList(address, district, city, postal_code, phone, location);
         values = String.join("','", value);

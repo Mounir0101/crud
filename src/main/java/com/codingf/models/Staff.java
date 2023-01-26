@@ -52,7 +52,7 @@ public class Staff implements Tables {
             password = input.nextLine();
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address);
+            ResultSet result = statement.executeQuery("SELECT * FROM address WHERE address_id = '" + address + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas d'adresse ayant l'id " + address);
@@ -61,7 +61,7 @@ public class Staff implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM store WHERE store_id = " + store_id);
+            result = statement.executeQuery("SELECT * FROM store WHERE store_id = '" + store_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de magasin ayant l'id " + store_id);

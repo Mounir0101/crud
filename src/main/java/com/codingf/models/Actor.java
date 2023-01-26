@@ -1,14 +1,12 @@
 package com.codingf.models;
 
 import com.codingf.fonctions.Create;
-import com.codingf.fonctions.Read;
 import com.codingf.interfaces.Tables;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,10 +16,9 @@ public class Actor implements Tables {
     @Override
     public boolean create(Connection con, String table) {
 
-        boolean exists = false;
-        String actor = "";
-        List<String> column = null;
-        List<String> value = null;
+        String actor;
+        List<String> column;
+        List<String> value;
         final String green = "\u001B[32m";
         final String reset = "\u001B[0m";
         String[] actor_name;
@@ -46,8 +43,8 @@ public class Actor implements Tables {
                 }
             }
 
-            String columns = "";
-            String values = "";
+            String columns;
+            String values;
 
             column = Arrays.asList("first_name", "last_name");
             columns = String.join(",", column);

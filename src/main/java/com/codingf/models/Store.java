@@ -35,7 +35,7 @@ public class Store implements Tables {
             address_id = input.nextLine();
 
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = " + manager_staff_id);
+            ResultSet result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = '" + manager_staff_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas de manager ayant l'id " + manager_staff_id);
@@ -44,7 +44,7 @@ public class Store implements Tables {
             }
 
             statement = con.createStatement();
-            result = statement.executeQuery("SELECT * FROM address WHERE address_id = " + address_id);
+            result = statement.executeQuery("SELECT * FROM address WHERE address_id = '" + address_id + "'");
 
             if (!result.next()) {
                 System.err.println("Il n'existe pas d'adresse ayant l'id " + address_id);
