@@ -1,5 +1,6 @@
 package com.codingf;
 
+import com.codingf.fonctions.Delete;
 import com.codingf.fonctions.Read;
 import com.codingf.fonctions.Create;
 import com.codingf.fonctions.Update;
@@ -17,8 +18,7 @@ public class Main {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("Problème de chargement du driver");
         }
         System.out.println("Le driver est chargé");
@@ -37,32 +37,29 @@ public class Main {
 
         if (connection == null) {
             System.err.println("Erreur de connexion");
-        }
-        else {
+        } else {
             System.out.println(green + "Connexion établie" + reset);
         }
         Scanner nb = new Scanner(System.in);
         int table;
 
-        while(true) {
+        while (true) {
 
             while (true) {
 
                 DatabaseMetaData databaseMetaData = connection.getMetaData();
                 ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
                 int iterator = 0;
-                while(resultSet.next()) {
+                while (resultSet.next()) {
                     if (resultSet.getString("TABLE_NAME").equals("film_text") || resultSet.getString("TABLE_NAME").equals("sys_config")) {
                         continue;
-                    }
-                    else {
+                    } else {
+
                         iterator++;
                         System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
                     }
                 }
 
-                //System.out.println("1: Country");
-                //System.out.println("2: City");
                 System.out.println("16: Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
@@ -107,10 +104,10 @@ public class Main {
             int choice;
 
             while (true) {
-                System.out.println("1: Créer");
-                System.out.println("2: Lire");
-                System.out.println("3: Mettre à jour");
-                System.out.println("4: Supprimer");
+                System.out.println("1: Créer un élément");
+                System.out.println("2: Lire la table");
+                System.out.println("3: Mettre à jour un élément");
+                System.out.println("4: Supprimer un élément");
                 System.out.println("Que voulez vous faire avec cette table ?");
 
                 String input = nb.nextLine();
@@ -369,11 +366,18 @@ public class Main {
 
                     break;
 
-                   }
-           }
+                case 4:
 
+                    if (Delete.delete(connection, tableSelected)) {
+                        continue;
+                    }
+
+                    break;
+
+            }
 
         }
+    }
 }
 
 
