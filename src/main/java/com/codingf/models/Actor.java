@@ -88,8 +88,6 @@ public class Actor implements Tables {
             column_list.add("last_name");
             column_list.add("last_update");
 
-            //System.out.println();
-
             Read.read(con, table, country_table, column_list);
 
 

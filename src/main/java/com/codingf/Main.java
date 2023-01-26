@@ -1,5 +1,6 @@
 package com.codingf;
 
+import com.codingf.fonctions.Delete;
 import com.codingf.fonctions.Read;
 import com.codingf.interfaces.Tables;
 import com.codingf.models.*;
@@ -51,13 +52,12 @@ public class Main {
                         continue;
                     }
                     else {
+
                         iterator++;
                         System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
                     }
                 }
 
-                //System.out.println("1: Country");
-                //System.out.println("2: City");
                 System.out.println("16: Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
@@ -102,10 +102,10 @@ public class Main {
             int choice;
 
             while (true) {
-                System.out.println("1: Créer");
-                System.out.println("2: Lire");
-                System.out.println("3: Mettre à jour");
-                System.out.println("4: Supprimer");
+                System.out.println("1: Créer un élément");
+                System.out.println("2: Lire la table");
+                System.out.println("3: Mettre à jour un élément");
+                System.out.println("4: Supprimer un élément");
                 System.out.println("Que voulez vous faire avec cette table ?");
 
                 String input = nb.nextLine();
@@ -355,6 +355,12 @@ public class Main {
                     }
 
                     break;
+
+                case 4:
+
+                    if (Delete.delete(connection, tableSelected)) {
+                        continue;
+                    }
 
             }
 
