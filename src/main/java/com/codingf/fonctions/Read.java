@@ -8,7 +8,7 @@ public class Read {
 
             while (list.next()) {
                 for (int j = 1; j <= columns.size(); j++) {
-                    if (!columns.get(j-1).equals("picture")) {
+                    if (!columns.get(j-1).equals("picture") && !columns.get(j-1).equals("location")) {
                         System.out.println(columns.get(j-1) + " : " + list.getString(j));
                     }
                 }
