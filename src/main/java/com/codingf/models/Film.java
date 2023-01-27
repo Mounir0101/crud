@@ -39,18 +39,78 @@ public class Film implements Tables {
         title = input.nextLine();
         System.out.println("Donnez la description du film");
         description = input.nextLine();
-        System.out.println("Donnez l'année de sortie du film");
-        release_year = input.nextLine();
-        System.out.println("Donnez l'id correspondant à la langue du film");
-        language_id = input.nextLine();
-        System.out.println("Donnez la durée de location du film (en semaines)");
-        rental_duration = input.nextLine();
-        System.out.println("Donnez le cout de location du film");
-        rental_rate = input.nextLine();
-        System.out.println("Donnez la durée du film en minutes");
-        length = input.nextLine();
-        System.out.println("Donnez le prix de remplacement du film en cas de perte");
-        replacement_cost = input.nextLine();
+
+        while (true) {
+            try {
+                System.out.println("Donnez l'année de sortie du film");
+                release_year = input.nextLine();
+                int year = Integer.parseInt(release_year);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez l'id correspondant à la langue du film");
+                language_id = input.nextLine();
+                int language = Integer.parseInt(language_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez la durée de location du film (en semaines)");
+                rental_duration = input.nextLine();
+                int duration = Integer.parseInt(rental_duration);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez le cout de location du film");
+                rental_rate = input.nextLine();
+                float rate = Float.parseFloat(rental_rate);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez la durée du film en minutes");
+                length = input.nextLine();
+                int len = Integer.parseInt(length);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez le prix de remplacement du film en cas de perte");
+                replacement_cost = input.nextLine();
+                float cost = Float.parseFloat(language_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre");
+            }
+        }
 
         System.out.println("1 : G");
         System.out.println("2 : PG");

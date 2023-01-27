@@ -55,6 +55,9 @@ public class Delete {
             }
 
             else {
+
+                Read.read(con, table);
+
                 System.out.println("Donnez l'id de l'élément que vous voulez supprimer");
                 element_id = input.nextLine();
             }

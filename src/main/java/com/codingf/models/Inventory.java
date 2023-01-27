@@ -28,10 +28,29 @@ public class Inventory implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Donnez l'id du film");
-            film_id = input.nextLine();
-            System.out.println("Donnez l'id du magasin");
-            store_id = input.nextLine();
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du film");
+                    film_id = input.nextLine();
+                    int film = Integer.parseInt(film_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du magasin");
+                    store_id = input.nextLine();
+                    int store = Integer.parseInt(store_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
 
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM store WHERE store_id = '" + store_id + "'");

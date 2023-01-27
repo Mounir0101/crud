@@ -33,16 +33,36 @@ public class Customer implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Indiquez l'id de votre magasin");
-            store_id = input.nextLine();
+            while (true) {
+                try {
+                    System.out.println("Indiquez l'id de votre magasin");
+                    store_id = input.nextLine();
+                    int store = Integer.parseInt(store_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
             System.out.println("Indiquez votre prénom");
             first_name = input.nextLine();
             System.out.println("Indiquez votre nom");
             last_name = input.nextLine();
             System.out.println("Indiquez votre adresse mail");
             email = input.nextLine();
-            System.out.println("Indiquez l'id de votre adresse");
-            address_id = input.nextLine();
+
+            while (true) {
+                try {
+                    System.out.println("Indiquez l'id de votre adresse");
+                    address_id = input.nextLine();
+                    int address = Integer.parseInt(address_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();

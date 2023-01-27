@@ -29,10 +29,29 @@ public class Store implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Donnez l'id du manager de ce magasin");
-            manager_staff_id = input.nextLine();
-            System.out.println("Donnez l'id de l'adresse de ce magasin");
-            address_id = input.nextLine();
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du manager de ce magasin");
+                    manager_staff_id = input.nextLine();
+                    int staff = Integer.parseInt(manager_staff_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id de l'adresse de ce magasin");
+                    address_id = input.nextLine();
+                    int address = Integer.parseInt(address_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
 
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM staff WHERE staff_id = '" + manager_staff_id + "'");

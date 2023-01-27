@@ -112,6 +112,7 @@ public class Main {
                     System.out.println("2: Lire la table");
                     System.out.println("3: Mettre à jour un élément");
                     System.out.println("4: Supprimer un élément");
+                    System.out.println("5: Retour");
                     System.out.println("Que voulez vous faire avec cette table ?");
                 }
                 else {
@@ -123,7 +124,7 @@ public class Main {
 
                 try {
                     choice = Integer.parseInt(input);
-                    if (choice < 1 || choice > 4) {
+                    if (choice < 1 || choice > 5) {
                         System.err.println("Choisissez une action valide");
                         continue;
                     }
@@ -297,6 +298,10 @@ public class Main {
                     }
 
                     break;
+
+                case 5:
+
+                    continue;
 
             }
 

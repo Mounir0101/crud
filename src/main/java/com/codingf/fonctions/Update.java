@@ -120,8 +120,18 @@ public class Update {
             else {
 
                 Read.read(con, table);
-                System.out.println("Choisissez l'id de l'élément à modifier ");
-                String elementid = input.nextLine();
+
+                String elementid;
+                while (true) {
+                    try {
+                        System.out.println("Choisissez l'id de l'élément à modifier ");
+                        elementid = input.nextLine();
+                        int element = Integer.parseInt(elementid);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Vous devez rentrer un nombre entier");
+                    }
+                }
 
                 stmt = con.createStatement();
                 ResultSet result = stmt.executeQuery("SELECT " + column_list.get(colonne_id) + " FROM " + table + " WHERE " + table + "_id = '" + elementid + "'");
@@ -141,17 +151,16 @@ public class Update {
                     elemento_id = column_list.get(colonne_id).split("_");
                     if (elemento_id[0].equals("manager")) {
                         stmt = con.createStatement();
-                        result = stmt.executeQuery("SELECT * FROM "+ elemento_id[1] +" WHERE " + column_list.get(colonne_id) + " = '" + value + "'");
+                        result = stmt.executeQuery("SELECT * FROM " + elemento_id[1] + " WHERE " + column_list.get(colonne_id) + " = '" + value + "'");
 
                         if (!result.next()) {
                             System.err.println("Il n'existe pas d'élément ayant l'id " + value + " dans la table " + elemento_id[1]);
                             System.err.println("Vous devez d'abord créer l'élément correspondante");
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         stmt = con.createStatement();
-                        result = stmt.executeQuery("SELECT * FROM "+ elemento_id[0] +" WHERE " + column_list.get(colonne_id) + " = '" + value + "'");
+                        result = stmt.executeQuery("SELECT * FROM " + elemento_id[0] + " WHERE " + column_list.get(colonne_id) + " = '" + value + "'");
 
                         if (!result.next()) {
                             System.err.println("Il n'existe pas d'élément ayant l'id " + value + " dans la table " + elemento_id[0]);

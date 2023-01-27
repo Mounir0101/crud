@@ -28,11 +28,30 @@ public class FilmCategory implements Tables {
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Donnez l'id du film");
-        film_id = input.nextLine();
 
-        System.out.println("Donnez l'id de la catégorie du film");
-        category_id = input.nextLine();
+        while (true) {
+            try {
+                System.out.println("Donnez l'id du film");
+                film_id = input.nextLine();
+                int film = Integer.parseInt(film_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.println("Donnez l'id de la catégorie du film");
+                category_id = input.nextLine();
+                int category = Integer.parseInt(category_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
 
         try {
 

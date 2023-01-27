@@ -30,14 +30,54 @@ public class Rental implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Donnez l'id de l'inventaire");
-            inventory_id = input.nextLine();
-            System.out.println("Donnez l'id du client");
-            customer_id = input.nextLine();
-            System.out.println("Donnez la durée de location du film (en semaines)");
-            return_date = input.nextLine();
-            System.out.println("Donnez l'id du manager");
-            staff_id = input.nextLine();
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id de l'inventaire");
+                    inventory_id = input.nextLine();
+                    int inventory = Integer.parseInt(inventory_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du client");
+                    customer_id = input.nextLine();
+                    int customer = Integer.parseInt(customer_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez la durée de location du film (en semaines)");
+                    return_date = input.nextLine();
+                    int date = Integer.parseInt(return_date);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du manager");
+                    staff_id = input.nextLine();
+                    int staff = Integer.parseInt(staff_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre");
+                }
+            }
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();

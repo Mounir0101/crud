@@ -28,11 +28,29 @@ public class FilmActor implements Tables {
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Donnez l'id de l'acteur");
-        actor_id = input.nextLine();
+        while (true) {
+            try {
+                System.out.println("Donnez l'id de l'acteur");
+                actor_id = input.nextLine();
+                int actor = Integer.parseInt(actor_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
 
-        System.out.println("Donnez l'id du film dans lequel l'acteur joue");
-        film_id = input.nextLine();
+        while (true) {
+            try {
+                System.out.println("Donnez l'id du film dans lequel l'acteur joue");
+                film_id = input.nextLine();
+                int film = Integer.parseInt(film_id);
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Vous devez rentrer un nombre entier");
+            }
+        }
 
         try {
 

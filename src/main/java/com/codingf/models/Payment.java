@@ -32,14 +32,53 @@ public class Payment implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Donnez l'id du client");
-            customer_id = input.nextLine();
-            System.out.println("Donnez l'id du manager");
-            staff_id = input.nextLine();
-            System.out.println("Donnez l'id de la location");
-            rental_id = input.nextLine();
-            System.out.println("Donnez le montant à payer");
-            amount = input.nextLine();
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du client");
+                    customer_id = input.nextLine();
+                    int customer = Integer.parseInt(customer_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du manager");
+                    staff_id = input.nextLine();
+                    int staff = Integer.parseInt(staff_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id de la location");
+                    rental_id = input.nextLine();
+                    int rental = Integer.parseInt(rental_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Donnez le montant à payer");
+                    amount = input.nextLine();
+                    float mount = Float.parseFloat(amount);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre");
+                }
+            }
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();

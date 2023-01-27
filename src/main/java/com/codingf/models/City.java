@@ -8,10 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class City implements Tables {
 
@@ -36,8 +33,18 @@ public class City implements Tables {
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM city");
 
-            System.out.println("Donnez l'id du pays dans lequel cette ville se trouve");
-            country_id = input.nextLine();
+            while (true) {
+                try {
+                    System.out.println("Donnez l'id du pays dans lequel cette ville se trouve");
+                    country_id = input.nextLine();
+                    int country = Integer.parseInt(country_id);
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.err.println("Vous devez rentrer un nombre entier");
+                }
+            }
+
             statement = con.createStatement();
             ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country_id` = '" + country_id + "'");
 
