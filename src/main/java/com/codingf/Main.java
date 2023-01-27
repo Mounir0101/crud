@@ -300,9 +300,8 @@ public class Main {
                     }
 
             }
+                    break;
 
-        }
-
+            }
 
     }
-}
