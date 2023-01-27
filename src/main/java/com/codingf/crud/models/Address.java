@@ -1,7 +1,7 @@
-package com.codingf.models;
+package com.codingf.crud.models;
 
-import com.codingf.fonctions.Create;
-import com.codingf.interfaces.Tables;
+import com.codingf.crud.fonctions.Create;
+import com.codingf.crud.interfaces.Tables;
 
 import java.sql.*;
 import java.util.Arrays;

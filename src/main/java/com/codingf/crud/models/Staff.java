@@ -1,17 +1,13 @@
-package com.codingf.models;
+package com.codingf.crud.models;
 
-import com.codingf.fonctions.Create;
-import com.codingf.fonctions.Read;
-import com.codingf.interfaces.Tables;
+import com.codingf.crud.fonctions.Create;
+import com.codingf.crud.fonctions.Read;
+import com.codingf.crud.interfaces.Tables;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

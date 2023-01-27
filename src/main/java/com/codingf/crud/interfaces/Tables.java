@@ -1,4 +1,4 @@
-package com.codingf.interfaces;
+package com.codingf.crud.interfaces;
 
 import java.sql.Connection;
 

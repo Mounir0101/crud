@@ -1,24 +1,23 @@
-package com.codingf.models;
+package com.codingf.crud.models;
 
-import com.codingf.fonctions.Create;
-import com.codingf.fonctions.Read;
-import com.codingf.interfaces.Tables;
+import com.codingf.crud.fonctions.Create;
+import com.codingf.crud.fonctions.Read;
+import com.codingf.crud.interfaces.Tables;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Category implements Tables {
+public class Language implements Tables {
     @Override
     public boolean create(Connection con, String table) {
 
         boolean exists = false;
-        String category = "";
+        String language = "";
         List<String> column = null;
         List<String> value = null;
         final String green = "\u001B[32m";
@@ -27,14 +26,14 @@ public class Category implements Tables {
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Quel catégorie voulez vous ajouter ?");
-            category = input.nextLine();
+            System.out.println("Quel langue voulez vous ajouter ?");
+            language = input.nextLine();
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM category");
+            ResultSet result = statement.executeQuery("SELECT * FROM language");
 
             while (result.next()) {
-                if (result.getString("name").equals(category)) {
-                    System.err.println("Cette catégorie existe déjà");
+                if (result.getString("name").equals(language)) {
+                    System.err.println("Cette langue existe déjà");
                     return true;
                 }
             }
@@ -44,11 +43,11 @@ public class Category implements Tables {
 
             column = Arrays.asList("name");
             columns = String.join(",", column);
-            value = Arrays.asList(category);
+            value = Arrays.asList(language);
             values = String.join("','", value);
-            Create.create(con, "category", columns, values);
+            Create.create(con, "language", columns, values);
 
-            System.out.println(green + "La catégorie " + category + " a bien été ajouté à la table category" + reset);
+            System.out.println(green + "La langue " + language + " a bien été ajouté à la table language" + reset);
 
             return false;
 
@@ -58,7 +57,6 @@ public class Category implements Tables {
             System.err.println("Erreur " + e);
             return true;
         }
-
     }
 
 }

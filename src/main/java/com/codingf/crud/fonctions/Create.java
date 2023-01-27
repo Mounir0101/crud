@@ -1,4 +1,4 @@
-package com.codingf.fonctions;
+package com.codingf.crud.fonctions;
 
 import java.sql.*;
 

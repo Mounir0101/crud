@@ -1,12 +1,13 @@
-package com.codingf;
+package com.codingf.crud;
 
-import com.codingf.fonctions.Delete;
-import com.codingf.fonctions.Read;
-import com.codingf.fonctions.Create;
-import com.codingf.fonctions.Update;
-import com.codingf.interfaces.Tables;
-import com.codingf.models.*;
-import com.codingf.connection.DbConnection;
+import com.codingf.crud.fonctions.Delete;
+import com.codingf.crud.fonctions.Read;
+import com.codingf.crud.fonctions.Update;
+import com.codingf.crud.interfaces.Tables;
+import com.codingf.crud.interfaces.*;
+import com.codingf.crud.models.*;
+import com.codingf.crud.connection.*;
+//import com.codingf.crud.connection.DbConnection;
 
 import java.sql.*;
 import java.util.*;
@@ -55,7 +56,8 @@ public class Main {
                 while (resultSet.next()) {
                     if (resultSet.getString("TABLE_NAME").equals("sys_config")) {
                         continue;
-                    } else {
+                    }
+                    else {
 
                         iterator++;
                         System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));

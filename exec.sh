@@ -1,0 +1,1 @@
+java -cp java-jdbc-BMT-1.0-SNAPSHOT-jar-with-dependencies.jar com.codingf.crud.Main --file.properties db.properties

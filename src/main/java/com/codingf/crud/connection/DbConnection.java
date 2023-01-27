@@ -1,10 +1,9 @@
-package com.codingf.connection;
+package com.codingf.crud.connection;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class DbConnection {
@@ -20,7 +19,7 @@ public class DbConnection {
 
     public static Connection dbConnection() {
 
-        System.out.println("create jdbc connection using properties file");
+        System.out.println("Create jdbc connection using properties file");
 
         Connection con = null;
 
@@ -32,7 +31,6 @@ public class DbConnection {
             String host = prop.getProperty("db.host");
             String dbName = prop.getProperty("db.dbase");
             String dbport = prop.getProperty("db.port");
-            //String url = prop.getProperty("db.url");
 
             String url ="jdbc:mysql://" + host + ":" + dbport + "/" + dbName;
 
@@ -44,7 +42,7 @@ public class DbConnection {
             con = DriverManager.getConnection(url, username, password);
 
             if (con != null) {
-                System.out.println("connection created successfully using properties file");
+                System.out.println("Connection created successfully using properties file");
                 return con;
             }
 
