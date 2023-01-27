@@ -5,6 +5,13 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Update {
+
+    /**
+     * Fonction pour mettre à jour un élément
+     * @param con: la connection à la bdd
+     * @param table: la table contenant l'élément qu'on veut mettre à jour
+     * @return: true s'il y a une erreur, pour arrrêter la fonction
+     */
     public static boolean update(Connection con, String table) {
 
         try {
@@ -41,6 +48,9 @@ public class Update {
             String category_id;
 
             if (table.equals("film_actor") || table.equals("film_category")) {
+
+                // Pour ces deux tables, on ne peut pas sélectionner uniquement l'id, donc on doit sélectionner
+                // les deux id de la table pour éviter de mettre à jour des éléments qu'on veut garder
 
                 System.out.println("Donnez l'id du film correspondant à l'élément que vous voulez modifier");
                 film_id = input.nextLine();

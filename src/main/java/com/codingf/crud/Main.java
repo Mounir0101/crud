@@ -41,6 +41,7 @@ public class Main {
             System.out.println(green + "Connexion établie" + reset);
         }*/
 
+        // connexion à la BDD
         Connection connection = DbConnection.dbConnection();
 
         Scanner nb = new Scanner(System.in);
@@ -50,6 +51,7 @@ public class Main {
 
             while (true) {
 
+                // affichage des tables
                 DatabaseMetaData databaseMetaData = connection.getMetaData();
                 ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
                 int iterator = 0;
@@ -84,7 +86,7 @@ public class Main {
             }
 
             String tableSelected = "";
-
+            // selection de la table
             switch (table) {
                 case 1 -> tableSelected = "actor";
                 case 2 -> tableSelected = "address";
@@ -110,6 +112,7 @@ public class Main {
 
             while (true) {
                 if (!tableSelected.equals("film_text")) {
+                    //menu Principal
                     System.out.println("1: Créer un élément");
                     System.out.println("2: Lire la table");
                     System.out.println("3: Mettre à jour un élément");
@@ -139,6 +142,7 @@ public class Main {
             Scanner input = new Scanner(System.in);
             boolean exists = false;
 
+            // instanciation des tables
             Tables actors = new Actor();
             Tables addresses = new Address();
             Tables categories = new Category();
@@ -157,8 +161,10 @@ public class Main {
 
             switch (choice) {
 
+
                 case 1:
 
+                    // creer un nouvel element dans la table sélectionnée
                     switch (tableSelected) {
 
                         case "actor":
@@ -282,18 +288,21 @@ public class Main {
                     break;
 
                 case 2:
+                    // lire la table sélectionnée
 
                     Read.read(connection, tableSelected);
 
                     break;
 
                 case 3:
+                    // mettre a jour element dans la table sélectionnée
 
                     Update.update(connection, tableSelected);
 
                     break;
 
                 case 4:
+                    // supprimer un element dans la table sélectionnée
 
                     if (Delete.delete(connection, tableSelected)) {
                         continue;
@@ -310,9 +319,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-
-

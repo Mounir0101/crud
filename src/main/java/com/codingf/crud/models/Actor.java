@@ -13,6 +13,12 @@ import java.util.Scanner;
 
 public class Actor implements Tables {
 
+    /**
+     * Fonctions personnalisées pour chaque table pour ajouter un élément
+     * @param con: la connection à la bdd
+     * @param table: la table dans laquelle on veut ajouter un élément
+     * @return: true s'il y a une erreur, pour arrêter la fonction
+     */
     @Override
     public boolean create(Connection con, String table) {
 
@@ -25,6 +31,8 @@ public class Actor implements Tables {
 
         Scanner input = new Scanner(System.in);
 
+        // Pour chaque champ, on demande la valeur que l'utilisateur veut ajouter
+
         System.out.println("Quel acteur/actrice voulez vous ajouter ?");
         actor = input.nextLine();
         actor_name = actor.split(" ");
@@ -32,6 +40,8 @@ public class Actor implements Tables {
         String last_name = actor_name[1];
 
         try {
+
+            // On vérifie que la valeur entrée par l'utlisateur n'existe pas déjà
 
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM actor");

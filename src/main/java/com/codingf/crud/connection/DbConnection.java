@@ -25,6 +25,9 @@ public class DbConnection {
 
         try {
 
+            final String green = "\u001B[32m";
+            final String reset = "\u001B[0m";
+
             Properties prop = loadPropertiesFile();
 
             String driverClass = prop.getProperty("db.driver");
@@ -42,7 +45,7 @@ public class DbConnection {
             con = DriverManager.getConnection(url, username, password);
 
             if (con != null) {
-                System.out.println("Connection created successfully using properties file");
+                System.out.println(green + "Connection created successfully using properties file" + reset);
                 return con;
             }
 

@@ -4,7 +4,12 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Delete {
-
+    /**
+     * Fonction pour supprimer un élément
+     * @param con: la connection à la bdd
+     * @param table: la table dans laquelle on supprime l'élément
+     * @return: true s'il y a une erreur, pour arrêter la fonction
+     */
     public static boolean delete(Connection con, String table) {
 
         try {
@@ -20,6 +25,9 @@ public class Delete {
             Scanner input = new Scanner(System.in);
 
             if (table.equals("film_actor") || table.equals("film_category")) {
+
+                // Pour ces deux tables, on ne peut pas sélectionner uniquement l'id, donc on doit sélectionner
+                // les deux id de la table pour éviter de supprimer des éléments qu'on veut garder
 
                 System.out.println("Donnez l'id du film que vous voulez supprimer");
                 film_id = input.nextLine();
@@ -64,12 +72,13 @@ public class Delete {
 
             Statement statement;
 
-            //System.out.println(green + "Checkpoint 1" + reset);
+            /**
+             * On va chercher dans toutes les autres tables si l'une d'entre elles a une colonne qui utilise
+             * l'élement sélectionné comme clé étrangère
+             */
 
             DatabaseMetaData databaseMetaData = con.getMetaData();
             ResultSet tableList = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
-
-            //System.out.println(green + "Checkpoint 2" + reset);
 
             while(tableList.next()) {
                 if (tableList.getString("TABLE_NAME").equals("film_text") || tableList.getString("TABLE_NAME").equals("sys_config")) {
@@ -77,25 +86,19 @@ public class Delete {
                 }
                 else {
 
-                    //System.out.println(green + "Checkpoint 3" + reset);
-
                     statement = con.createStatement();
                     ResultSet columnList = statement.executeQuery("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tableList.getString("table_name") + "'");
 
                     while (columnList.next()) {
 
-                        //System.out.println(green + "Checkpoint 4" + reset);
-
                         if (columnList.getString("column_name").equals(table + "_id") && !tableList.getString("table_name").equals(table)){
 
-                            //System.out.println(green + "Checkpoint 5" + reset);
                             System.out.println("SELECT * FROM " + tableList.getString("table_name") + " WHERE " + table + "_id = '" + element_id + "'");
 
                             statement = con.createStatement();
                             ResultSet result = statement.executeQuery("SELECT * FROM " + tableList.getString("table_name") + " WHERE " + table + "_id = '" + element_id + "'");
 
                             if (result.next()) {
-                                //System.out.println(green + "Checkpoint 6" + reset);
                                 System.err.println("L'élément que vous essayez de supprimer est utilisé comme clé étrangère dans la table " + tableList.getString("table_name"));
                                 return true;
                             }
@@ -104,7 +107,7 @@ public class Delete {
                 }
             }
 
-            System.out.println("DELETE FROM " + table + " WHERE " + table + "_id = " + element_id);
+            //System.out.println("DELETE FROM " + table + " WHERE " + table + "_id = " + element_id);
 
             statement = con.createStatement();
 
