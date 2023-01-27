@@ -17,6 +17,10 @@ public class DbConnection {
         return prop;
     }
 
+    /**
+     * Créer la connection à la bdd
+     * @return: objet connection
+     */
     public static Connection dbConnection() {
 
         System.out.println("Create jdbc connection using properties file");
