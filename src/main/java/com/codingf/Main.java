@@ -6,21 +6,16 @@ import com.codingf.fonctions.Create;
 import com.codingf.fonctions.Update;
 import com.codingf.fonctions.Update;
 import com.codingf.interfaces.Tables;
-import com.codingf.models.City;
-import com.codingf.models.Country;
-import com.mysql.cj.Query;
-import com.mysql.cj.util.StringUtils;
+import com.codingf.models.*;
+import com.codingf.connection.DbConnection;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-        try {
+        /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e) {
@@ -42,32 +37,46 @@ public class Main {
 
         if (connection == null) {
             System.err.println("Erreur de connexion");
-        }
-        else {
+        } else {
             System.out.println(green + "Connexion établie" + reset);
-        }
+        }*/
+
+        Connection connection = DbConnection.dbConnection();
+
         Scanner nb = new Scanner(System.in);
         int table;
 
-        while(true) {
+        while (true) {
 
             while (true) {
 
-                System.out.println("1: Country");
-                System.out.println("2: City");
-                System.out.println("3: Quitter");
+                DatabaseMetaData databaseMetaData = connection.getMetaData();
+                ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
+                int iterator = 0;
+                while (resultSet.next()) {
+                    if (resultSet.getString("TABLE_NAME").equals("sys_config")) {
+                        continue;
+                    } else {
+
+                        iterator++;
+                        System.out.println(iterator + " : " + resultSet.getString("TABLE_NAME"));
+                    }
+                }
+
+                System.out.println("17 : Quitter");
                 System.out.println("Quelle table voulez vous choisir ?");
 
                 String input = nb.nextLine();
 
                 try {
                     table = Integer.parseInt(input);
-                    if (table < 1 || table > 3) {
+                    if (table < 1 || table > 17) {
                         System.err.println("Choisissez une action valide");
                         continue;
                     }
                     break;
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     System.err.println("nombre incorrect");
                 }
 
@@ -76,19 +85,40 @@ public class Main {
             String tableSelected = "";
 
             switch (table) {
-                case 1 -> tableSelected = "country";
-                case 2 -> tableSelected = "city";
-                case 3 -> System.exit(0);
+                case 1 -> tableSelected = "actor";
+                case 2 -> tableSelected = "address";
+                case 3 -> tableSelected = "category";
+                case 4 -> tableSelected = "city";
+                case 5 -> tableSelected = "country";
+                case 6 -> tableSelected = "customer";
+                case 7 -> tableSelected = "film";
+                case 8 -> tableSelected = "film_actor";
+                case 9 -> tableSelected = "film_category";
+                case 10 -> tableSelected = "film_text";
+                case 11 -> tableSelected = "inventory";
+                case 12 -> tableSelected = "language";
+                case 13 -> tableSelected = "payment";
+                case 14 -> tableSelected = "rental";
+                case 15 -> tableSelected = "staff";
+                case 16 -> tableSelected = "store";
+                //case 17 -> tableSelected = "sys_config";
+                case 17 -> System.exit(0);
             }
 
-            int choice;
+            int choice = 0;
 
             while (true) {
-                System.out.println("1: Créer");
-                System.out.println("2: Lire");
-                System.out.println("3: Mettre à jour");
-                System.out.println("4: Supprimer");
-                System.out.println("Que voulez vous faire avec cette table ?");
+                if (!tableSelected.equals("film_text")) {
+                    System.out.println("1: Créer un élément");
+                    System.out.println("2: Lire la table");
+                    System.out.println("3: Mettre à jour un élément");
+                    System.out.println("4: Supprimer un élément");
+                    System.out.println("Que voulez vous faire avec cette table ?");
+                }
+                else {
+                    Read.read(connection, tableSelected);
+                    break;
+                }
 
                 String input = nb.nextLine();
 
@@ -107,158 +137,160 @@ public class Main {
             Scanner input = new Scanner(System.in);
             boolean exists = false;
 
+            Tables actors = new Actor();
+            Tables addresses = new Address();
+            Tables categories = new Category();
+            Tables countries = new Country();
+            Tables cities = new City();
+            Tables customers = new Customer();
+            Tables films = new Film();
+            Tables films_actors = new FilmActor();
+            Tables films_categories = new FilmCategory();
+            Tables inventories = new Inventory();
+            Tables languages = new Language();
+            Tables payments = new Payment();
+            Tables rentals = new Rental();
+            Tables staffs = new Staff();
+            Tables stores = new Store();
+
             switch (choice) {
 
                 case 1:
 
-                    String country = "";
-                    String city = "";
-                    boolean existCountry = false;
+                    switch (tableSelected) {
 
-                    /*switch (tableSelected) {
+                        case "actor":
+
+                            if (actors.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "address":
+
+                            System.out.println("Désolé, je n'ai pas réussi à rendre possible la création d'une adresse");
+                            break;
+
+                        case "category":
+
+                            if (categories.create(connection, tableSelected)) {
+                                continue;
+                            }
+                            break;
 
                         case "country":
 
-                            System.out.println("Quel pays voulez vous ajouter ?");
-                            country = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM country");
-
-                            while (result.next()) {
-                                if (result.getString("country").equals(country)) {
-                                    System.err.println("Ce pays existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                        case "city":
-
-                            System.out.println("Quel ville voulez vous ajouter ?");
-                            city = input.nextLine();
-                            Statement statement = connection.createStatement();
-                            ResultSet result = statement.executeQuery("SELECT * FROM city");
-
-                            System.out.println("Dans quel pays se trouve cette ville ?");
-                            country = input.nextLine();
-                            statement = connection.createStatement();
-                            ResultSet countryExists = statement.executeQuery("SELECT country_id FROM country where `country` = '" + country + "'");
-
-                            while (result.next()) {
-                                if (result.getString("city").equals(city)) {
-                                    System.err.println("Cette ville existe déjà");
-                                    exists = true;
-                                    break;
-                                }
-                            }
-
-                            if (!countryExists.next()) {
-                                System.err.println("Ce pays n'existe pas");
-
-                            }
-                            else {
-                                country = countryExists.getString("country_id");
-                            }
-
-                            /*while (countryExists.next()) {
-                                System.out.println(countryExists.getString("country_id"));
-                                if (countryExists.getString("country_id").equals(country)) {
-                                    //System.err.println("Cette vile existe déjà");
-                                    country = countryExists.getString("country_id");
-                                    System.out.println(country);
-                                    existCountry = true;
-                                    break;
-                                }
-                            }
-
-                    }*/
-
-                    if (exists) {
-                        continue;
-                    }
-                    else {
-                        List<String> column = null;
-                        List<String> value = null;
-                        String columns = "";
-                        String values = "";
-
-                        if (tableSelected.equals("country")) {
-
-                            /*column = Arrays.asList("country");
-                            columns = String.join(",", column);
-                            value = Arrays.asList(country);
-                            values = String.join("','", value);
-                            Create.create(connection, tableSelected, columns, values);*/
-
-                            Tables countries = new Country();
                             if (countries.create(connection, tableSelected)) {
                                 continue;
                             }
 
-                        }
+                            break;
 
-                        else if (tableSelected.equals("city")) {
-
-                            System.out.println(country);
-
-                            /*if (!existCountry) {
-                                System.err.println("Ce pays n'existe pas");
-                                //continue;
-                            }*/
-
-                            //System.out.println();
-
-                            /*column = Arrays.asList("city", "country_id");
-                            columns = String.join(",", column);
-                            value = Arrays.asList(city, country);
-                            values = String.join("','", value);*/
-                            Tables cities = new City();
+                        case "city":
 
                             if (cities.create(connection, tableSelected)) {
                                 continue;
                             }
 
+                            break;
 
-                            //Create.create(connection, tableSelected, columns, values);
+                        case "customer":
 
-                        }
+                            if (customers.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film":
+
+                            if (films.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film_actor":
+
+                            if (films_actors.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "film_category":
+
+                            if (films_categories.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "inventory":
+
+                            if (inventories.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "language":
+
+                            if (languages.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "payment":
+
+                            if (payments.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "rental":
+
+                            if (rentals.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "staff":
+
+                            if (staffs.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
+                        case "store":
+
+                            if (stores.create(connection, tableSelected)) {
+                                continue;
+                            }
+
+                            break;
+
                     }
                     break;
 
                 case 2:
 
-                    switch (tableSelected) {
+                    Read.read(connection, tableSelected);
 
-                        case "country":
-
-                            Tables countries = new Country();
-
-                            countries.read(connection, tableSelected);
-
-                            break;
-
-
-                        case "city":
-                            Tables cities =  new City();
-                             cities.read(connection, tableSelected);
-                             break;
-
-                    }
-
-                    //Read.read(connection, tableSelected);
                     break;
 
-
                 case 3:
-                    String column = "";
-                    String values = "";
 
-                    switch (tableSelected) {
+                    Update.update(connection, tableSelected);
 
-                        case "country":
+                    break;
 
-                            System.out.println("Quel pays voulez vous modifier ?");
-                            country = input.nextLine();
+                case 4:
 
                             Statement statement = connection.createStatement();
                             ResultSet result = statement.executeQuery("SELECT * FROM country");
@@ -297,6 +329,10 @@ public class Main {
                                 exists = true;
                                 break;
                             }
+
+                    if (Delete.delete(connection, tableSelected)) {
+                        continue;
+
                     }
 
             }
@@ -304,4 +340,16 @@ public class Main {
 
             }
 
+
     }
+
+        }
+    }
+}
+
+
+
+
+
+
+

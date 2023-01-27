@@ -13,13 +13,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Country implements Tables{
-
+public class Category implements Tables {
     @Override
     public boolean create(Connection con, String table) {
 
         boolean exists = false;
-        String country = "";
+        String category = "";
         List<String> column = null;
         List<String> value = null;
         final String green = "\u001B[32m";
@@ -28,14 +27,14 @@ public class Country implements Tables{
         try {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("Quel pays voulez vous ajouter ?");
-            country = input.nextLine();
+            System.out.println("Quel catégorie voulez vous ajouter ?");
+            category = input.nextLine();
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM country");
+            ResultSet result = statement.executeQuery("SELECT * FROM category");
 
             while (result.next()) {
-                if (result.getString("country").equals(country)) {
-                    System.err.println("Ce pays existe déjà");
+                if (result.getString("name").equals(category)) {
+                    System.err.println("Cette catégorie existe déjà");
                     return true;
                 }
             }
@@ -43,23 +42,23 @@ public class Country implements Tables{
             String columns = "";
             String values = "";
 
-            column = Arrays.asList("country");
+            column = Arrays.asList("name");
             columns = String.join(",", column);
-            value = Arrays.asList(country);
+            value = Arrays.asList(category);
             values = String.join("','", value);
-            Create.create(con, "country", columns, values);
+            Create.create(con, "category", columns, values);
 
-            System.out.println(green + "Le pays " + country + " a bien été ajouté à la table country" + reset);
+            System.out.println(green + "La catégorie " + category + " a bien été ajouté à la table category" + reset);
 
             return false;
-
 
         }
 
         catch (SQLException e) {
-            System.err.println("Erreur : " + e);
+            System.err.println("Erreur " + e);
             return true;
         }
+
     }
 
 }
